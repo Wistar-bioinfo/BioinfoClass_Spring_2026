@@ -56,6 +56,6 @@ https://pcom.zoom.us/j/94375316257?pwd=0K4oCIOIa60iaoJhbGxdVdXFMTeHFA.1
 -   [slides](week1/Bioinfo_class_week1_01_06_2026.pdf)
 -   more resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 -   demo MarkDown [qmd](week1/week1/2026-01-08_dplyr_demo.Rmd )
--   demo `dplyr` [qmd](week1/week1/2026-01-08_dplyr_demo.Rmd )
+-   demo `dplyr` [qmd](week1/2026-01-08_dplyr_demo.Rmd )
 
 ------------------------------------------------------------------------
