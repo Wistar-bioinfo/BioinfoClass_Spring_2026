@@ -19,11 +19,13 @@ The Wistar Bioinformatics Class is a 15-week research training program for PCOM 
 Zoom lint to BIOM 643
 
 Bioinformatics - Tuesdays 2-3:30
+
    https://pcom.zoom.us/j/95474182052?pwd=zYZpNnN0hOQe2VcqaVoZmAbMJAriL5.1
 
 
 
 Bioinformatics - Thursdays 2-3:30
+
    https://pcom.zoom.us/j/94375316257?pwd=0K4oCIOIa60iaoJhbGxdVdXFMTeHFA.1
 
 ------------------------------------------------------------------------
