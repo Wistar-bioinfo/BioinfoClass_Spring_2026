@@ -20,6 +20,9 @@ Zoom lint to BIOM 643
 
 Bioinformatics - Tuesdays 2-3:30
 https://pcom.zoom.us/j/95474182052?pwd=zYZpNnN0hOQe2VcqaVoZmAbMJAriL5.1
+
+
+
 Bioinformatics - Thursdays 2-3:30
 https://pcom.zoom.us/j/94375316257?pwd=0K4oCIOIa60iaoJhbGxdVdXFMTeHFA.1
 
@@ -29,10 +32,16 @@ https://pcom.zoom.us/j/94375316257?pwd=0K4oCIOIa60iaoJhbGxdVdXFMTeHFA.1
 
 ### Programs to Install
 
-1.  Slack <https://slack.com/> our slack name is `wistar_bioinfo_spring2026`
-    Join Slack [bioinfo group](https://join.slack.com/t/clip-c3i6499/shared_invite/zt-3mtm7m24j-VaFvvvcGtTQ5ZksqXr0xtA) or email me [jmadzo@wistar.org](mailto:jmadzo@wistar.org){.email}
-2.  R <https://cloud.r-project.org/> to download and install R.
-3.  RStudio <https://rstudio.com/products/rstudio/download/> and download the FREE version.
+1. Slack <https://slack.com/> our slack name is `wistar_bioinfo_spring2026`
+   Join Slack [bioinfo group](https://join.slack.com/t/clip-c3i6499/shared_invite/zt-3mtm7m24j-VaFvvvcGtTQ5ZksqXr0xtA) or email me [jmadzo@wistar.org](mailto:jmadzo@wistar.org)
+
+   
+
+2. R <https://cloud.r-project.org/> to download and install R.
+
+   
+
+3. RStudio <https://rstudio.com/products/rstudio/download/> and download the FREE version.
 
 ------------------------------------------------------------------------
 
