@@ -54,15 +54,8 @@ Bioinformatics - Thursdays 2-3:30
 -   Introduction to Bioinformatics Research
 -   Introduction to Rmarkdown and RStudio
 -   [slides](week1/Bioinfo_class_week1_01_06_2026.pdf)
--   demo `dplyr` / `tidyverse` [qmd](week1/2026-01-08_dplyr_demo.Rmd )
+-   more resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
+-   demo MarkDown [qmd](week1/week1/2026-01-08_dplyr_demo.Rmd )
+-   demo `dplyr` [qmd](week1/2026-01-08_dplyr_demo.Rmd )
 
 ------------------------------------------------------------------------
-
-<!---
--   more resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
-
--   demo MarkDown [qmd](week1/week1/2026-01-08_dplyr_demo.Rmd )
--   in class notebook [qmd](2026-01-08_dplyr_in_class.qmd)
--   html version [html](2026-01-08_dplyr_in_class.html)
-
---->
