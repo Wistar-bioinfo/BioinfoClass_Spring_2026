@@ -37,11 +37,11 @@ Bioinformatics - Thursdays 2-3:30
 
    
 
-2. R <https://cloud.r-project.org/> to download and install R.
+2. <b> R: </b> <https://cloud.r-project.org/> to download and install R.
 
    
 
-3. RStudio <https://rstudio.com/products/rstudio/download/> and download the FREE version.
+3. <b> RStudio: </b> <https://rstudio.com/products/rstudio/download/> and download the FREE version.
 
 ------------------------------------------------------------------------
 
