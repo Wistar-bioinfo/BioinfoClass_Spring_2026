@@ -20,7 +20,7 @@ Zoom lint to BIOM 643
 
 Bioinformatics - Tuesdays 2-3:30
 
-   (https://pcom.zoom.us/j/95474182052?pwd=zYZpNnN0hOQe2VcqaVoZmAbMJAriL5.1)
+   <https://pcom.zoom.us/j/95474182052?pwd=zYZpNnN0hOQe2VcqaVoZmAbMJAriL5.1>
 
 
 
