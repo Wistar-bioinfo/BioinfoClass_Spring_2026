@@ -11,8 +11,11 @@ The Wistar Bioinformatics Class is a 15-week research training program for PCOM 
 ![calendar](BioInfo_schedule_spring2026.png)
 
 ### Webpage mirror
-
 [Bioinfo Class Spring 2026](https://wistar-bioinfo.github.io/BioinfoClass_Spring_2026)
+
+#### GitHub mirror
+[GitHun Bioinfo Class Spring 2026](https://github.com/Wistar-bioinfo/BioinfoClass_Spring_2026)
+
 
 ------------------------------------------------------------------------
 
@@ -72,10 +75,11 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 -   demo MarkDown [qmd](week2/BioinfoClass_2026_week2_rmarkdown.qmd)
 
-##### Plotting in R
+##### Data organization and Plotting in R
 
--   in class notebook [qmd](week2/2026-01-08_dplyr_in_class.qmd)
--   
+-   [slides](week2/Bioinfo_class_week2_2026.pdf)
+
+ 
 <!---
 
 --->
