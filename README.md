@@ -61,8 +61,15 @@ Bioinformatics - Thursdays 2-3:30
 
 ------------------------------------------------------------------------
 
+
+
+#### **Week 2** Markdown and more  Basics R 
+
+resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
+
+
+
 <!---
--   more resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 -   demo MarkDown [qmd](week1/2026-01-08_dplyr_demo.Rmd )
 -   in class notebook [qmd](2026-01-08_dplyr_in_class.qmd)
