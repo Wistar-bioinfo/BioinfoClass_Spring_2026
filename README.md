@@ -66,13 +66,14 @@ Bioinformatics - _Thursdays 2-3:30_
 ##### Markdown
 resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
--   html version [html](week2/BioinfoClass_2026_week2_rmarkdown.qmd.html)
+-   html version [html](week2/BioinfoClass_2026_week2_rmarkdown.html)
 
 -   demo MarkDown [qmd](week2/BioinfoClass_2026_week2_rmarkdown.qmd)
 
 ##### Data organization and Plotting in R
 
 -   [slides](week2/Bioinfo_class_week2_2026.pdf)
+-   demo [qmd](week2/Plotting_in_R_Introduction_demo.Rmd)
 
 
 <!---
