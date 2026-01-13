@@ -16,17 +16,14 @@ The Wistar Bioinformatics Class is a 15-week research training program for PCOM 
 #### GitHub mirror
 [GitHun Bioinfo Class Spring 2026](https://github.com/Wistar-bioinfo/BioinfoClass_Spring_2026)
 
-
 ------------------------------------------------------------------------
 
-Zoom lint to BIOM 643
+__Zoom lint to BIOM 643__
 
-Bioinformatics - Tuesdays 2-3:30
+Bioinformatics - _Tuesdays 2-3:30_
    <https://pcom.zoom.us/j/95474182052?pwd=zYZpNnN0hOQe2VcqaVoZmAbMJAriL5.1>
 
-
-
-Bioinformatics - Thursdays 2-3:30
+Bioinformatics - _Thursdays 2-3:30_
    <https://pcom.zoom.us/j/94375316257?pwd=0K4oCIOIa60iaoJhbGxdVdXFMTeHFA.1>
 
 ------------------------------------------------------------------------
@@ -35,7 +32,7 @@ Bioinformatics - Thursdays 2-3:30
 
 ### Programs to Install
 
-1. Slack <https://slack.com/> our slack name is `wistar_bioinfo_spring2026`
+1. <b>Slack</b> <https://slack.com/> our slack name is `wistar_bioinfo_spring2026`
    Join Slack [bioinfo group](https://join.slack.com/t/clip-c3i6499/shared_invite/zt-3mtm7m24j-VaFvvvcGtTQ5ZksqXr0xtA) or email me [jmadzo@wistar.org](mailto:jmadzo@wistar.org)
 
    
@@ -64,8 +61,6 @@ Bioinformatics - Thursdays 2-3:30
 
 ------------------------------------------------------------------------
 
-
-
 #### **Week 2** Markdown and more  Basics R 
 
 ##### Markdown
@@ -79,7 +74,7 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 -   [slides](week2/Bioinfo_class_week2_2026.pdf)
 
- 
+
 <!---
 
 --->
