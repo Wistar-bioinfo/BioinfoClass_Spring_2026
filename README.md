@@ -54,7 +54,7 @@ Bioinformatics - _Thursdays 2-3:30_
 -   [slides](week1/Bioinfo_class_week1_01_06_2026.pdf)
 -   demo `dplyr` / `tidyverse` [qmd](week1/2026-01-08_dplyr_demo.Rmd )
 
--   in class notebook [qmd](week1/2026-01-08_dplyr_in_class.qmd)
+-   in class changes notebook [qmd](week1/2026-01-08_dplyr_in_class.qmd)
 -   html version [html](week1/2026-01-08_dplyr_in_class.html)
 
 ------------------------------------------------------------------------
@@ -66,9 +66,10 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 -   html version [html](week2/BioinfoClass_2026_week2_rmarkdown.html)
 
--   demo MarkDown [qmd](week2/BioinfoClass_2026_week2_rmarkdown.qmd)
+-   MarkDown notebook demo [qmd](week2/BioinfoClass_2026_week2_rmarkdown.qmd)
 
 ##### Data organization and Plotting in R
 
 -   [slides](week2/Bioinfo_class_week2_2026.pdf)
--   demo [qmd](week2/Plotting_in_R_Introduction_demo.Rmd)
+-   notebook demo [qmd](week2/PPlotting_in_R_Introduction_demo.qmd)
+-   html version [html](week2/Plotting_in_R_Introduction_demo.html)

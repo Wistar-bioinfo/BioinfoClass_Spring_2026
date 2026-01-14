@@ -1,7 +1,7 @@
 ---
 title: "Bioinformatic Class Spring 2026 Week2"
 author: "JM"
-format: html
+format: pdf
 editor: visual
 ---
 
@@ -88,7 +88,7 @@ Throughout this document, there are a bunch of lines with #s in front of them. T
 
 To make text italicized add one \* on either side of it.
 
-*This text will render italicized.*
+**This text will render italicized.**
 
 ------------------------------------------------------------------------
 
@@ -103,6 +103,7 @@ You can either make an ordered list with numbers, ex:
 1.  Item 1
 2.  Item 2
 3.  Item 3
+4.  Item 4
 
 Or make an unordered list, a bullet-point list, ex:
 
