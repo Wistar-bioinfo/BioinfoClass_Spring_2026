@@ -73,3 +73,9 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 -   [slides](week2/Bioinfo_class_week2_2026.pdf)
 -   notebook demo [qmd](week2/Plotting_in_R_Introduction_demo.qmd)
 -   html version [html](week2/Plotting_in_R_Introduction_demo.html)
+
+------------------------------------------------------------------------
+
+#### **Week 3:** Statistics I: Scientific Foundations
+
+##### Tuesday
