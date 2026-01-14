@@ -1,0 +1,26 @@
+---
+title: "Class week1"
+author: "JM"
+format: html
+editor: visual
+css: styles.css
+---
+
+## Import libraries
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+### Tables and Examining Data
+
+```{r, classes="scrolling"}
+iris
+```
+
+
+### 2nd
+
+```{r, classes="scrolling"}
+iris
+```

@@ -1,0 +1,16 @@
+
+Users should login to the cluster with
+
+ssh username@wi-hpc-dev
+DO NOT RUN COMPUTATIONALLY INTENSIVE JOBS ON THE HEAD NODES.
+
+Users should always be requesting resources:
+
+srun --cpus-per-task=2 --mem=10G --account=pcom --partition=pcom bash
+# or in a SBATCH script
+
+Users are limited to 2 cores and 10G of memory at a time.
+
+The -account and -partition flags are REQUIRED!
+
+Users can access their PCOM share at /wistar/pcom. Jozef Madzo - Italo Tempera is still labeled as the owner of this share, is this still the case?
