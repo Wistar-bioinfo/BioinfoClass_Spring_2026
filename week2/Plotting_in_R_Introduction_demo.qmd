@@ -1,10 +1,17 @@
-```{r setup, include=FALSE}
+---
+title: "Introduction to plotting in R"
+author: "JM"
+format: html
+editor: visual
+---
+
+## Load libraries
+
+```{r}
 library(tidyverse)
+
 #library(conflicted)
-
-filter <- dplyr::filter
-
-knitr::opts_chunk$set(echo = TRUE)
+#filter <- dplyr::filter
 ```
 
 ## Plotting with `ggplot2`
@@ -17,13 +24,13 @@ Today will focus on the basics of how to use `ggplot`, with all examples with th
 
 ------------------------------------------------------------------------
 
-<br>
-
 ## Basic ggplot syntax
 
 You have to specify a data table, at least one column from the table, and a geometry.
 
 ```{r}
+# plot(iris$Petal.Length, iris$Petal.Width)
+
 ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) + 
   geom_point()
 ```
@@ -46,14 +53,14 @@ The legend title, like the axes labels, is the name of the column given to `colo
 You just have to change the geom to change the plot to another geometry/type
 
 ```{r}
-ggplot(iris, aes(x = Species, y = Petal.Width, color = Species)) + 
+iris %>% 
+  ggplot(aes(x = Species, y = Petal.Width, color = Species)) + 
   geom_boxplot()
 ```
 
 ```{r}
 airquality %>% head(n=3)
 ```
-
 
 ```{r}
 ggplot(airquality, aes(x = Month, y = Wind, color = as.factor(Month))) + 
@@ -63,9 +70,6 @@ airquality %>%
   ggplot(aes(x = Month, y = Wind, color = as.factor(Month))) + 
     geom_boxplot()
 ```
-
-
-<br>
 
 ## Geometries (aka Types of Plots)
 
@@ -106,7 +110,6 @@ airquality %>%
   ggplot(aes(x = Temp)) + 
   geom_density()
 ```
-
 
 ##### Discrete
 
@@ -169,7 +172,6 @@ airquality %>%
   geom_point()
 ```
 
-
 **Adding a line of best fit**
 
 If you want to fit a straight line (or other type of fit) to your scatter plot, add on `geom_smooth()`. Use `method = lm` inside it to add a line (see the `geom_smooth()` documentation for other fit methods). Also, it automatically supplies confidence intervals with whatever is fit.
@@ -197,7 +199,6 @@ airquality %>%
   geom_point() + 
   geom_smooth(method = lm)
 ```
-
 
 #### Discrete X, Continuous Y
 
@@ -247,8 +248,6 @@ ggplot(iris, aes(x = Species, y = Petal.Length, fill = Species)) +
   geom_quasirandom(method = 'smiley')
 ```
 
-<br>
-
 ## Aesthetics
 
 ### Basics
@@ -288,8 +287,6 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length,
                  size = Species)) + 
   geom_point()
 ```
-
-<br>
 
 ## Miscellaneous Useful Stuff to Know
 
@@ -466,5 +463,3 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Petal.Length)) + geo
 # viridis continuous color scale
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Petal.Length)) + geom_point(size = 4) + scale_color_viridis()
 ```
-
-<br><br>
