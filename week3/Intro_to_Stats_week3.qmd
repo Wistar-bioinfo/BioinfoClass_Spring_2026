@@ -6,9 +6,9 @@ editor: visual
 ---
 
 ```{r}
-install.packages("tidyverse")
-install.packages("viridis")
-install.packages("broom")
+# install.packages("tidyverse")
+# install.packages("viridis")
+# install.packages("broom")
 ```
 
 
