@@ -5,6 +5,13 @@ format: html
 editor: visual
 ---
 
+```{r}
+install.packages("tidyverse")
+install.packages("viridis")
+install.packages("broom")
+```
+
+
 ```{r, message=FALSE}
 # load libraries
 library(tidyverse)
@@ -12,13 +19,13 @@ library(viridis)
 library(broom)
 ```
 
-## 2020-03-18 Statistics in R
+## Statistics in R
 
 We've finally gotten to what R was meant for! Statistics!
 
 # T-test
 
-## One sample t-ttest
+## One sample T-test
 
 For testing the mean of some continuous data against a known mean.
 
@@ -40,7 +47,7 @@ t.test(iris$Sepal.Length, mu = 5.8)
 ### Lets vizualize what we are testing
 
 ```{r}
-ggplot(iris, aes(x =0 , y=Sepal.Length)) +
+ggplot(iris, aes(x=0 , y=Sepal.Length)) +
   geom_boxplot() +
   geom_jitter(width = 0.1) +
   geom_hline(yintercept = 5.5 ) #, color='red', linewidth = 2, linetype = 'dashed')
