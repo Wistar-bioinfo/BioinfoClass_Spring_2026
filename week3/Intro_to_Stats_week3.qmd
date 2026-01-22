@@ -1,0 +1,296 @@
+---
+title: "Statistics in R"
+author: "JM"
+format: html
+editor: visual
+---
+
+```{r, message=FALSE}
+# load libraries
+library(tidyverse)
+library(viridis)
+library(broom)
+```
+
+## 2020-03-18 Statistics in R
+
+We've finally gotten to what R was meant for! Statistics!
+
+# T-test
+
+## One sample t-ttest
+
+For testing the mean of some continuous data against a known mean.
+
+```{r}
+ggplot(iris, aes(x =0 , y=Sepal.Length)) +
+  geom_boxplot()
+```
+
+```{r}
+iris$Sepal.Length
+
+### significant result
+t.test(iris$Sepal.Length, mu = 10)
+
+### non-significant result
+t.test(iris$Sepal.Length, mu = 5.8)
+```
+
+### Lets vizualize what we are testing
+
+```{r}
+ggplot(iris, aes(x =0 , y=Sepal.Length)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.1) +
+  geom_hline(yintercept = 5.5 ) #, color='red', linewidth = 2, linetype = 'dashed')
+```
+
+Using `broom` functions to tidy up `t.test()`
+
+```{r}
+t.test(iris$Sepal.Length, mu = 5)
+
+# tidy()
+# Gets the result of the test
+t.test(iris$Sepal.Length, mu = 5) %>% tidy()
+
+# glance()
+# Gets the model parameters; frequently some of the columns will be the same as
+# the ones you get with tidy(). With t.test() tidy() and glance() actually 
+# return exactly the same results.
+t.test(iris$Sepal.Length, mu = 5) %>% glance()
+```
+
+## Two sample t-test
+
+For testing the difference in means between two groups
+
+### unpaired
+
+This is the standard t-test that you should use by default
+
+```{r}
+# How to pipe into t.test
+iris %>% 
+# filter out one species, because we can only test two groups
+  filter(Species != 'setosa') %>%
+# Syntax is numeric variable ~ grouping variable
+# Need to use . when piping; this tells t.test() that the table is being piped in
+  t.test(Sepal.Length ~ Species, data = .)
+
+### with tidy()
+iris %>% 
+  filter(Species != 'setosa') %>%
+  t.test(Sepal.Length ~ Species, data = .) %>%
+  tidy()
+```
+
+### Lets vizualize what we are testing
+
+```{r}
+iris %>% 
+  filter(Species != 'setosa') %>% 
+ggplot(aes(x = Species , y=Sepal.Length, fill = Species)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.1)
+```
+
+### what going under hood of R test
+
+```{r}
+vector_1 <- iris %>% 
+  filter(Species=="versicolor") %>% 
+  select(Sepal.Length)
+
+vector_2 <- iris %>% 
+  filter(Species=="virginica") %>% 
+  select(Sepal.Length)
+
+vector_1
+vector_2
+```
+
+```{r}
+t.test(vector_1, vector_2)
+```
+
+### even more underhood
+
+```{r}
+# iris$Sepal.Length
+
+# iris$Species == "versicolor"
+
+# iris[iris$Species=="versicolor",]
+
+iris[iris$Species=="versicolor",]$Sepal.Length
+
+iris[iris$Species=="virginica",]$Sepal.Length
+```
+
+```{r}
+vector_1 <-  iris[iris$Species=="versicolor",]$Sepal.Length
+
+vector_2 <-  iris[iris$Species=="virginica",]$Sepal.Length
+
+vector_1
+
+vector_2
+
+
+t.test(vector_1, vector_2)
+```
+
+## Paired
+
+You can use a paired t-test when a natural pairing exists between the data, for example individuals before and after treatment with some drugs, student test scores at the beginning of the year vs the end of the year, tumor and normal tissue samples from the same individual. The built-in `sleep` dataset gives the extra sleep time for a group of individuals treated with two different drugs. The columns contain:
+
+-   **extra** = numeric increase in hours of sleep
+-   **group** = drug given
+-   **ID** = patient ID
+
+Let's look at the sleep table first.
+
+```{r}
+sleep %>% 
+  ggplot(aes(x = group, y = extra, fill=group)) +
+  geom_boxplot() +
+  geom_point() #+
+  #geom_line(aes(group = ID))
+
+sleep %>% 
+  ggplot(aes(x = group, y = extra, colour = ID)) +
+  geom_point() +
+  geom_line(aes(group = ID))
+```
+
+To do a paired t-test, set the argument `paired = T`. Let's compare doing a paired and an unpaired t-test on the same data. A paired t-test will always give you a more significant result.
+
+```{r}
+## Paired t-test
+## The sleep data is actually paired, so could have been in wide format:
+sleep_wide <- pivot_wider(sleep, names_from = group, values_from = "extra") #%>% 
+
+sleep_wide <- sleep_wide %>% 
+  rename(time_1 = "1",
+         time_2 = "2")
+```
+
+```{r}
+# on long data()
+t.test(data = sleep, extra ~ group)
+
+# wide data
+t.test(sleep_wide$time_1, sleep_wide$time_2)
+```
+
+#### Traditional interface
+
+```{r}
+# wide data
+t.test(sleep_wide$time_1, sleep_wide$time_2, paired = TRUE)
+```
+
+#### Formula interface
+
+```{r}
+# wide data
+t.test(Pair(time_1,time_2) ~ 1, data=sleep_wide)
+```
+
+## chi-square
+
+```{r}
+mtcars
+```
+
+Do a chi-square test
+
+```{r}
+chisq.test(mtcars$carb, mtcars$cyl)
+```
+
+What does it look like using the `broom` functions?
+
+```{r}
+chisq.test(mtcars$carb, mtcars$cyl) %>% tidy() 
+
+chisq.test(mtcars$carb, mtcars$cyl) %>% glance()
+
+chisq.test(mtcars$carb, mtcars$cyl) %>% augment()
+```
+
+### ANOVA
+
+Look at the data
+
+```{r}
+chickwts
+chickwts %>% distinct(feed)
+```
+
+Do the test
+
+```{r}
+aov(weight ~ feed, data = chickwts)
+
+aov(weight ~ feed, data = chickwts) %>% summary()
+```
+
+What does it look like with the different `broom` functions?
+
+```{r}
+aov(weight ~ feed, data = chickwts) %>% tidy()
+
+aov(weight ~ feed, data = chickwts) %>% glance()
+
+aov(weight ~ feed, data = chickwts) %>% augment()
+```
+
+#### Post-Hoc Tukey Test
+
+Tukey test explicitly compares all different functions
+
+```{r}
+aov(weight ~ feed, data = chickwts) %>% summary()
+print('---')
+aov(weight ~ feed, data = chickwts) %>% TukeyHSD()
+```
+
+## What does it look like with the different `broom` functions?
+
+```{r}
+aov(weight ~ feed, data = chickwts) %>% TukeyHSD() %>% tidy()
+
+# aov(weight ~ feed, data = chickwts) %>% TukeyHSD() %>% glance()
+
+# aov(weight ~ feed, data = chickwts) %>% TukeyHSD() %>% augment()
+```
+
+### Linear Model
+
+```{r, fig.width = 5, fig.height = 5}
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point() +
+  geom_smooth(method = 'lm', se = F)
+```
+
+Do the test
+
+```{r}
+### y ~ x
+lm(Sepal.Length ~ Sepal.Width, data = iris) %>% summary()
+
+lm(Sepal.Width ~ Sepal.Length, data = iris) %>% summary()
+```
+
+What does it look like with the different `broom` functions?
+
+```{r}
+lm(Sepal.Length ~ Sepal.Width, data = iris) %>% tidy()
+
+lm(Sepal.Length ~ Sepal.Width, data = iris) %>% glance()
+
+lm(Sepal.Length ~ Sepal.Width, data = iris) %>% augment(iris)
+```

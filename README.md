@@ -79,3 +79,9 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 #### **Week 3:** Statistics I: Scientific Foundations
 
 ##### Tuesday
+
+-   [slides](week3/Bioinfo_class_week3_spring_2026.pdf)
+
+##### Thursday
+-   notebook demo [qmd](week3/Intro_to_Stats_week3.qmd) 
+-   html version [html](week3/Intro_to_Stats_week3.html)
