@@ -5,12 +5,14 @@ format: html
 editor: visual
 ---
 
+
+## Install libraries (only once)
+
 ```{r}
 # install.packages("tidyverse")
 # install.packages("viridis")
 # install.packages("broom")
 ```
-
 
 ```{r, message=FALSE}
 # load libraries
@@ -19,23 +21,27 @@ library(viridis)
 library(broom)
 ```
 
-## Statistics in R
+# 2020-03-20 Statistics in R
 
 We've finally gotten to what R was meant for! Statistics!
 
-# T-test
+## T-test
 
-## One sample T-test
+### One sample t-ttest
 
 For testing the mean of some continuous data against a known mean.
 
-```{r}
-ggplot(iris, aes(x =0 , y=Sepal.Length)) +
+```{r, classes="scrolling"}
+iris$Sepal.Length
+
+ggplot(iris, aes(x =0 ,y=Sepal.Length)) +
   geom_boxplot()
 ```
 
 ```{r}
 iris$Sepal.Length
+
+mean(iris$Sepal.Length)
 
 ### significant result
 t.test(iris$Sepal.Length, mu = 10)
@@ -44,13 +50,13 @@ t.test(iris$Sepal.Length, mu = 10)
 t.test(iris$Sepal.Length, mu = 5.8)
 ```
 
-### Lets vizualize what we are testing
+#### Lets vizualize what we are testing
 
 ```{r}
-ggplot(iris, aes(x=0 , y=Sepal.Length)) +
+ggplot(iris, aes(x =0 , y=Sepal.Length)) +
   geom_boxplot() +
   geom_jitter(width = 0.1) +
-  geom_hline(yintercept = 5.5 ) #, color='red', linewidth = 2, linetype = 'dashed')
+  geom_hline(yintercept = 10, color='red', linewidth = 2, linetype = 'dashed')
 ```
 
 Using `broom` functions to tidy up `t.test()`
@@ -103,9 +109,9 @@ ggplot(aes(x = Species , y=Sepal.Length, fill = Species)) +
   geom_jitter(width = 0.1)
 ```
 
-### what going under hood of R test
+#### what going under hood of R test
 
-```{r}
+```{r, classes="scrolling"}
 vector_1 <- iris %>% 
   filter(Species=="versicolor") %>% 
   select(Sepal.Length)
@@ -120,15 +126,19 @@ vector_2
 
 ```{r}
 t.test(vector_1, vector_2)
+
+t.test(Sepal.Length ~ Species, data = filter(iris, Species != 'setosa'))
 ```
 
-### even more underhood
+#### even more underhood
 
-```{r}
+data are splitted into 2 vectors
+
+```{r , classes="scrolling"}
 # iris$Sepal.Length
-
+# 
 # iris$Species == "versicolor"
-
+# 
 # iris[iris$Species=="versicolor",]
 
 iris[iris$Species=="versicolor",]$Sepal.Length
@@ -136,7 +146,9 @@ iris[iris$Species=="versicolor",]$Sepal.Length
 iris[iris$Species=="virginica",]$Sepal.Length
 ```
 
-```{r}
+t-test is run on vectoers 2 vectors
+
+```{r , classes="scrolling"}
 vector_1 <-  iris[iris$Species=="versicolor",]$Sepal.Length
 
 vector_2 <-  iris[iris$Species=="virginica",]$Sepal.Length
@@ -149,7 +161,7 @@ vector_2
 t.test(vector_1, vector_2)
 ```
 
-## Paired
+### Paired T test
 
 You can use a paired t-test when a natural pairing exists between the data, for example individuals before and after treatment with some drugs, student test scores at the beginning of the year vs the end of the year, tumor and normal tissue samples from the same individual. The built-in `sleep` dataset gives the extra sleep time for a group of individuals treated with two different drugs. The columns contain:
 
@@ -163,8 +175,8 @@ Let's look at the sleep table first.
 sleep %>% 
   ggplot(aes(x = group, y = extra, fill=group)) +
   geom_boxplot() +
-  geom_point() #+
-  #geom_line(aes(group = ID))
+  geom_point() +
+  geom_line(aes(group = ID))
 
 sleep %>% 
   ggplot(aes(x = group, y = extra, colour = ID)) +
@@ -182,6 +194,8 @@ sleep_wide <- pivot_wider(sleep, names_from = group, values_from = "extra") #%>%
 sleep_wide <- sleep_wide %>% 
   rename(time_1 = "1",
          time_2 = "2")
+
+sleep_wide
 ```
 
 ```{r}
@@ -206,33 +220,57 @@ t.test(sleep_wide$time_1, sleep_wide$time_2, paired = TRUE)
 t.test(Pair(time_1,time_2) ~ 1, data=sleep_wide)
 ```
 
-## chi-square
-
-```{r}
-mtcars
-```
+## Chi-square
 
 Do a chi-square test
 
+H0: In Electorate district XYZ the party affiliation is same between genders
+
 ```{r}
-chisq.test(mtcars$carb, mtcars$cyl)
+# made up data
+Elecorate <- data.frame(row.names = c("Democrat", "Independent", "Republican"),
+                        male = c(484, 239, 477),
+                        female = c(762, 327, 468))
+
+Elecorate
+```
+
+```{r}
+Elecorate %>% chisq.test()
+
+# Results
+# H0: rejected
+# H1: there is sig difference between gender in party affiliation
 ```
 
 What does it look like using the `broom` functions?
 
 ```{r}
-chisq.test(mtcars$carb, mtcars$cyl) %>% tidy() 
+chisq.test(Elecorate) %>% tidy() 
 
-chisq.test(mtcars$carb, mtcars$cyl) %>% glance()
+chisq.test(Elecorate) %>% glance()
 
-chisq.test(mtcars$carb, mtcars$cyl) %>% augment()
+# chisq.test(Elecorate) %>% augment()
 ```
+Does orientation matter?
+```{r}
+Elecorate
+
+Elecorate2 <- Elecorate %>% t() %>% as.data.frame()
+Elecorate2
+```
+
+
+```{r}
+Elecorate2 %>% chisq.test() %>% tidy()
+```
+
 
 ### ANOVA
 
 Look at the data
 
-```{r}
+```{r , classes="scrolling"}
 chickwts
 chickwts %>% distinct(feed)
 ```
@@ -250,9 +288,8 @@ What does it look like with the different `broom` functions?
 ```{r}
 aov(weight ~ feed, data = chickwts) %>% tidy()
 
-aov(weight ~ feed, data = chickwts) %>% glance()
-
-aov(weight ~ feed, data = chickwts) %>% augment()
+# aov(weight ~ feed, data = chickwts) %>% glance()
+# aov(weight ~ feed, data = chickwts) %>% augment()
 ```
 
 #### Post-Hoc Tukey Test
@@ -265,19 +302,31 @@ print('---')
 aov(weight ~ feed, data = chickwts) %>% TukeyHSD()
 ```
 
+```{r}
+chickwts %>% 
+  ggplot(aes(feed, weight, fill = feed)) +
+    geom_boxplot() +
+    geom_jitter(width = 0.1)
+```
+
 ## What does it look like with the different `broom` functions?
 
 ```{r}
 aov(weight ~ feed, data = chickwts) %>% TukeyHSD() %>% tidy()
 
 # aov(weight ~ feed, data = chickwts) %>% TukeyHSD() %>% glance()
-
 # aov(weight ~ feed, data = chickwts) %>% TukeyHSD() %>% augment()
 ```
 
-### Linear Model
+```{r}
+anova_chcken_feed <- aov(weight ~ feed, data = chickwts)
 
-```{r, fig.width = 5, fig.height = 5}
+anova_chcken_feed %>% TukeyHSD() %>% tidy()
+```
+
+## Linear Model
+
+```{r}
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
   geom_point() +
   geom_smooth(method = 'lm', se = F)
@@ -289,7 +338,7 @@ Do the test
 ### y ~ x
 lm(Sepal.Length ~ Sepal.Width, data = iris) %>% summary()
 
-lm(Sepal.Width ~ Sepal.Length, data = iris) %>% summary()
+# lm(Sepal.Width ~ Sepal.Length, data = iris) %>% summary()
 ```
 
 What does it look like with the different `broom` functions?
@@ -297,7 +346,27 @@ What does it look like with the different `broom` functions?
 ```{r}
 lm(Sepal.Length ~ Sepal.Width, data = iris) %>% tidy()
 
-lm(Sepal.Length ~ Sepal.Width, data = iris) %>% glance()
+# lm(Sepal.Length ~ Sepal.Width, data = iris) %>% glance()
+# lm(Sepal.Length ~ Sepal.Width, data = iris) %>% augment(iris)
+```
 
-lm(Sepal.Length ~ Sepal.Width, data = iris) %>% augment(iris)
+#### linear regression when accounted for **Species** as covariet
+
+```{r}
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, colour = Species)) +
+  geom_point() +
+  geom_smooth(method = 'lm', se = F)
+```
+
+Do the test
+
+```{r}
+### y ~ x
+lm(Sepal.Length ~ Sepal.Width + Species, data = iris) %>% summary()
+```
+
+What does it look like with the different `broom` functions?
+
+```{r}
+lm(Sepal.Length ~ Sepal.Width + Species, data = iris) %>% tidy()
 ```
