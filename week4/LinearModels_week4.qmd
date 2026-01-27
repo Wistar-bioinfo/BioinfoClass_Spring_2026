@@ -1,0 +1,100 @@
+---
+title: "Linear Regression"
+author: "jm"
+format: html
+editor: visual
+---
+
+## Load libraries
+
+```{r, message=FALSE}
+library("tidyverse")
+library("ggpubr")
+library("broom")
+```
+
+# Simple regression
+
+```{r}
+iris %>% 
+  ggplot(aes(x=Sepal.Length, y=Sepal.Width)) +
+  geom_point() +
+  stat_smooth(method="lm") +
+  stat_regline_equation() +
+  theme_bw()
+
+iris %>% 
+  ggplot(aes(x=Sepal.Length, y=Sepal.Width)) +
+  geom_point(aes(color=Species)) +
+  stat_smooth(method="lm", se = FALSE) +
+  stat_regline_equation() +
+  theme_bw()
+
+iris %>% 
+  ggplot(aes(x=Sepal.Length, y=Sepal.Width, color=Species)) +
+  geom_point() +
+  stat_smooth(method="lm", se = FALSE) +
+  stat_regline_equation() +
+  theme_bw()
+```
+
+```{r}
+iris %>% 
+  lm(Sepal.Width ~ Sepal.Length, data = . ) %>% 
+  tidy()
+```
+
+# Multivariate regression
+
+## without interaction (with fixed slope)
+
+```{r}
+model_multy <-lm( Sepal.Width ~ Sepal.Length + Species, data = iris) 
+
+model_multy %>% tidy()
+```
+
+```{r}
+# predict(model_multy, iris)
+```
+
+```{r}
+# Get the model predictions
+iris$predicted_multy <- predict(model_multy, iris)
+```
+
+```{r}
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point() +
+  geom_line(aes(y = predicted_multy), linewidth = 1) +
+  labs(title = "Sepal Width vs Sepal Length by Species",
+       x = "Sepal Length",
+       y = "Sepal Width") +
+  theme_minimal()
+```
+
+```{r}
+# iris %>% 
+#   ggplot(aes(Sepal.Length, predicted_multy))+
+#   geom_point(aes(colour = Species))
+```
+
+## With intereaction (different slopes)
+
+```{r}
+model_int <- lm(Sepal.Width ~ Sepal.Length * Species, data = iris)
+
+model_int %>% tidy()
+
+# Get the model predictions
+iris$predicted <- predict(model_int, iris)
+
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point() +
+  geom_line(aes(y = predicted), size = 1) +
+  #geom_smooth(method="lm", se = FALSE) +
+  labs(title = "Sepal Width vs Sepal Length by Species",
+       x = "Sepal Length",
+       y = "Sepal Width") +
+  theme_minimal()
+```

@@ -1,0 +1,278 @@
+---
+title: "Clustering and Linear Regression"
+author: "jm"
+format: html
+editor: visual
+---
+
+```{r}
+# # resolve package conflicts
+# filter <- dplyr::filter
+# select <- dplyr::select
+```
+
+# Clustering Methods in R
+
+## Setup / Install libraries (only once)
+
+```{r}
+# install.packages("tidyverse")
+# install.packages("viridis")
+```
+
+Install the `broom` package. This package summarizes model information, so it's going to be very useful to make the clustering data easier to work with, but it'll be especially useful when we review statistics.
+
+```{r}
+# install.packages('broom')
+```
+
+Install the `pheatmap` package. `ggplot2` doesn't really do heatmaps, so you need a different plotting package.
+
+```{r}
+# install.packages('pheatmap')
+```
+
+## Load libraries
+
+```{r}
+library(tidyverse)
+library(viridis)
+library(broom)
+library(pheatmap)
+```
+
+------------------------------------------------------------------------
+
+To demonstrate all of the clustering methods, we'll use the `iris` dataset again. There's an underlying variable, Species, that explains some of the variation in the data. We'll see if the clustering methods can recover the three species.
+
+```{r}
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point(size = 3) +
+  labs(x = 'Sepal Width (cm)', y = 'Sepal Length (cm)') +
+  theme_classic() +
+  theme(axis.title = element_text(size = 14), legend.title = element_text(size = 14))
+```
+
+<br>
+
+### kmeans
+
+For kmeans clustering, we have to pick the number of clusters we want. All of clustering methods only work on numeric data, so you have to remove any categorical variables before running the clustering function.
+
+```{r}
+iris %>% select(-Species) %>% kmeans(4)
+```
+
+The `broom` package functions transforms special model objects like "kmeans" objects into tables that you can do further work with. The `itdy()` function transforms the model results into a table.
+
+```{r}
+iris %>% select(-Species) %>% kmeans(4) %>% tidy()
+```
+
+But we don't really care about the model parameters, what we want is the cluster assignments with the original data so we can plot the clusters. The `augment()` function does this
+
+```{r}
+iris_kmeans4 <- iris %>% select(-Species) %>% kmeans(4) %>% augment(iris)
+
+iris_kmeans4 %>% head()
+```
+
+And let's visualize the clusters we just created!
+
+```{r}
+ggplot(iris_kmeans4, aes(x = Petal.Width, 
+                         y = Petal.Length, 
+                         color = .cluster)) +
+  geom_point(size = 3) +
+  labs(x = 'Petal Width (cm)', 
+       y = 'Petal Length (cm)',
+       color = 'cluster') +
+  theme_classic() +
+  theme(axis.title = element_text(size = 14), 
+        legend.title = element_text(size = 14))
+```
+
+Notice that clusters can overlap. Also it looks like from the visualization that four is probably not the correct number of clusters.
+
+#### Test Different Kmeans Cluster Numbers
+
+Because you don't know the correct number of kmeans clusters, we test a bunch of them. By running many kmeans and picking the kmeans with the fewest number of clusters with the best fit, we can do a little better than just guessing.
+
+```{r}
+# drop the categorial columns from the data
+iris_num <- iris %>% select(-Species)
+
+### do a bunch of kmeans
+# make a table of numbers of clusters
+kmeans_params <- tibble(k = 2:15) %>% 
+# map is a function that creates nested tables or other objects within tables
+# it will allow us to keep the kmeans results in the table
+  mutate(kclust = map(k, ~ kmeans(iris_num, .)),
+# get the model parameters using broom::glance() and map() to apply it over our
+# nested kmeans clustering
+         kclust = map(kclust, ~ glance(.))) %>% 
+# use unnest to turn the models back into a normal table
+unnest(kclust)
+
+kmeans_params %>% head()
+```
+
+```{r}
+# plot to see the inflection point and pick number of clusters 
+kmeans_params %>%
+  mutate(group = 1) %>%   # just do this (add a grouping variable) to make geom_line() happy
+  ggplot(aes(x = as.factor(k), y = tot.withinss, group = group)) + 
+    geom_point(size = 3) + 
+    geom_line(size = 1) + 
+    labs(x = 'Number of Clusters', y = 'Goodness of Fit \n (within cluster sum of squares)') +
+    theme_classic() +
+    theme(axis.title = element_text(size = 14))
+```
+
+Let's try some of the numbers of clusters where we see an inflection point from the plot above.
+
+```{r}
+### kmeans with three clusters
+iris %>% 
+  select(-Species) %>% 
+  kmeans(2) %>% 
+  augment(iris) %>%
+  
+  ggplot(aes(x = Sepal.Width, y = Sepal.Length, 
+             color = .cluster, shape = Species)) +
+    geom_point(size = 3) +
+    labs(x = 'Sepal Width (cm)', y = 'Sepal Length (cm)', color = 'cluster') +
+    theme_classic() +
+    theme(axis.title = element_text(size = 14), legend.title = element_text(size = 14))
+
+### kmeans with six clusters
+iris %>% 
+  select(-Species) %>% 
+  kmeans(10) %>% 
+  augment(iris) %>%
+  
+  ggplot(aes(x = Sepal.Width, y = Sepal.Length, 
+             color = .cluster, shape = Species)) +
+    geom_point(size = 3) +
+    labs(x = 'Sepal Width (cm)', y = 'Sepal Length (cm)', color = 'cluster') +
+    theme_classic() +
+    theme(axis.title = element_text(size = 14), legend.title = element_text(size = 14))
+```
+
+Three clusters does a pretty good job of finding the species of the irises.
+
+<br>
+
+## Heatmaps
+
+### The Basics
+
+To plot a heatmap with `pheatmap()`, all that's needed is a completely numeric table. Row and column names will become labels in the heatmap.
+
+```{r}
+pheatmap(iris[,1:4])
+```
+
+```{r}
+iris %>%
+# drop the species column because it's not numeric
+  select(-Species) %>%
+# plot the heatmap
+  pheatmap(.)
+```
+
+**NOTE:** The problem of rownames
+
+```{r}
+### rownames
+iris %>% 
+  mutate(sample_id = paste0('sample', 1:150)) %>%
+  column_to_rownames('sample_id') %>% 
+  head()
+```
+
+### Modifying Appearance
+
+Before playing with the appearance, save the data as a modified table that's in the correct format for `pheatmap()`
+
+```{r}
+iris_num <- iris %>%
+  select(-Species)
+```
+
+**Drop the row names** `pheatmap` tries to label each individual row. 99% of the time there are so many rows that this is unreadable and looks terrible. You can tell `pheatmap` not to label them.
+
+```{r}
+pheatmap(iris_num, 
+         show_rownames = F)
+```
+
+**Change the color palette** for the heatmap by supplying a different R color palette to the `color` argument.
+
+```{r}
+### use an existing color palette like viridis
+pheatmap(iris_num, 
+         show_rownames = F, 
+         color = viridis(50))
+
+### changing the number after the palette changes how many colors/breaks there are in the scale
+pheatmap(iris_num, 
+         show_rownames = F, 
+         color = viridis(5))
+
+### pick colors for high, medium, low
+# colorRampPalette takes a list of colors and makes them into a continuous palette
+pheatmap(iris_num, 
+         show_rownames = F, 
+         color = colorRampPalette(c("dodgerblue", "gold", "orangered"))(50))
+```
+
+```{r}
+# add rownames to dataset
+iris_sample_names <- iris %>% 
+  mutate(sample_id = paste0('sample', 1:nrow(.))) %>%
+  column_to_rownames('sample_id')
+
+iris_sample_names %>% head()
+
+#transpose data 
+iris_transpose <- iris_sample_names %>% 
+  select(-Species) %>% 
+  t()
+
+iris_transpose %>% as.data.frame() %>% .[,1:8]
+```
+
+```{r}
+iris_transpose %>% 
+pheatmap()
+```
+
+```{r}
+iris_transpose %>% 
+pheatmap(
+         color = viridis(10),
+         show_rownames = T,
+         show_colnames = F)
+```
+
+
+
+```{r}
+col_anno <- select(iris_sample_names, Species)
+col_anno %>% head()
+
+anno_colors <- list(Species = c(setosa = 'forestgreen',
+                                   versicolor = 'red3',
+                                   virginica = 'navyblue'))
+
+my_color = colorRampPalette(c("navy", "white", "firebrick3"))(50)
+
+iris_transpose %>% 
+pheatmap(cutree_cols = 3,
+         annotation_col = col_anno, 
+         # annotation_colors = anno_colors,
+         color = my_color,
+         show_rownames = F,
+         show_colnames = F)
+```

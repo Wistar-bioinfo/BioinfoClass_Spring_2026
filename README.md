@@ -82,6 +82,22 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 -   [slides](week3/Bioinfo_class_week3_spring_2026.pdf)
 
-##### Thursday
+##### Thursday:  practice section on basic statistic
 -   notebook demo [qmd](week3/Intro_to_Stats_week3.qmd) 
 -   html version [html](week3/Intro_to_Stats_week3.html)
+
+- R color palette [pdf](week3/ColorChart.pdf)
+
+------------------------------------------------------------------------
+
+#### **Week 4:**
+
+##### Tuesday - Statistics II: Clustering and Linear Model
+
+-   [slides](week4/Clustering_LM_week4.pdf)
+
+-   demo Clustering [qmd](week4/Clustering_week4.qmd) and its [html](week4/Clustering_week4.html)
+
+-   demo LM [qmd](week4/LinearModels_week4.qmd) and its [html](week4/LinearModels_week4.html)
+
+##### Thursday - practice section on basic statistic continue
