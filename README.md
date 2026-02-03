@@ -96,8 +96,23 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 -   [slides](week4/Clustering_LM_week4.pdf)
 
+##### Thursday - practice section on basic statistic continue
+
 -   demo Clustering [qmd](week4/Clustering_week4.qmd) and its [html](week4/Clustering_week4.html)
 
 -   demo LM [qmd](week4/LinearModels_week4.qmd) and its [html](week4/LinearModels_week4.html)
 
-##### Thursday - practice section on basic statistic continue
+----
+
+#### **Week 5:** Introduction to Next Generation Sequencing
+
+##### Tuesday - Theoretical basis for sequencing (Sonali Majumdar)
+
+-   [slides](week5/Lecture_SonaliMajumdar_spring_2026.pdf) lecture presented by Sonali Majumdar (Managing Director, Genomics Facility)
+
+##### Thursday - Introduction to RNA-seq
+
+-   
+
+-----
+
