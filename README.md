@@ -108,11 +108,11 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 ##### Tuesday - Theoretical basis for sequencing (Sonali Majumdar)
 
--   [slides](week5/Lecture_SonaliMajumdar_spring_2026.pdf) lecture presented by Sonali Majumdar (Managing Director, Genomics Facility)
+-   [slides](week5/Lecture_SonaliMajumdar_spring_2026.pdf) lecture presented by *__Sonali Majumdar__* (_Managing Director, Genomics Facility_)
 
 ##### Thursday - Introduction to RNA-seq
 
--   
+-   [slides](week5/Bioinfo_class_week5_Intro_to_RNAseq.pdf) theory behind RNA-seq
 
 -----
 
