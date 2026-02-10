@@ -108,7 +108,7 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 ##### Tuesday - Theoretical basis for sequencing (Sonali Majumdar)
 
--   [slides](week5/Lecture_SonaliMajumdar_spring_2026.pdf) lecture presented by *__Sonali Majumdar__* (_Managing Director, Genomics Facility_)
+-   [slides](week5/Lecture_SonaliMajumdar_spring_2026.pdf) lecture presented by *__Sonali Majumdar__* (_Managing Director, Genomics Facility at Wistar Institute_)
 
 ##### Thursday - Introduction to RNA-seq
 
@@ -116,3 +116,7 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 -----
 
+#### **Week 6:** Gene Regulation
+
+- [slides](week6/Bioinfo_class_week6_Gene_Regulation_Sandra_Deliard.pdf) lecture presented by *__
+Sandra Deliard__* (_resercher at Wistar Institute_)
