@@ -119,3 +119,10 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 #### **Week 6:** Gene Regulation
 
 - [slides](week6/Bioinfo_class_week6_Gene_Regulation_Sandra_Deliard.pdf) lecture presented by *__Sandra Deliard, PhD__* (_Associate Staff Scientist at Wistar Institute_)
+
+
+#### Thursday - RNAseq practice
+
+- [notebook](Intro_RNAseq_dge.qmd)
+- [data](week6/data/TCGA_PRAD_counts.tsv.gz)
+- [metadata](week6/data/TCGA_PRAD_metadata.csv)
