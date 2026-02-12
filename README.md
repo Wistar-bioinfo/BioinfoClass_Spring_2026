@@ -123,6 +123,6 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 #### Thursday - RNAseq practice
 
-- [notebook](Intro_RNAseq_dge.qmd)
+- [notebook](week6/Intro_RNAseq_dge.qmd)
 - [data](week6/data/TCGA_PRAD_counts.tsv.gz)
 - [metadata](week6/data/TCGA_PRAD_metadata.csv)
