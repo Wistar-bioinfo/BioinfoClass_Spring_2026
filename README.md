@@ -137,8 +137,13 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 - [slides](week7/Bioinfo_class_week7_AleGardini_EpiRegulationofTranscription2026.pdf) lecture presented by *__Alessandro Gardini__* (_Associate Professor, Genomics Facility Scientific Director  Wistar Institute_)
 
-##### Thursday - RNAseq practice
-
+##### Thursday -  Stats of RNAseq: PCA / Linear Models
+###### PCA practice
 - [PCA](week7/PCA_w_prcomp_vs_PCAtools.qmd)
+##### T-test vs. Linear models
 - [t-test vs lm](week7/Common_stat_test_LM.qmd)
 
+##### Common Statistical tests are LMs (Linear Models)
+- [how to teach stat](https://lindeloev.github.io/tests-as-linear/)
+
+-----
