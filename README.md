@@ -120,7 +120,7 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 ##### Tuesday - Overview of Regulation of Gene expression
 
-- [slides](week6/Bioinfo_class_week6_Gene_Regulation_Sandra_Deliard.pdf) lecture presented by *__Sandra Deliard, PhD__* (_Associate Staff Scientist at Wistar Institute_)
+- [slides](week6/Bioinfo_class_week6_Gene_Regulation_Sandra_Deliard.pdf) lecture presented by *__Sandra Deliard__* (_Associate Staff Scientist at Wistar Institute_)
 
 
 ##### Thursday - RNAseq practice
