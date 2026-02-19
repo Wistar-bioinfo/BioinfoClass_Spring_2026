@@ -1,0 +1,57 @@
+---
+title: "Common Stat test are LM"
+format: html
+editor: visual
+---
+
+## Libraries
+
+```{r, message=FALSE}
+library(tidyverse)
+library(rstatix)
+library(ggpubr)
+```
+
+# Make data (correlated)
+
+```{r}
+a=rnorm(20,2,1)
+b=a+rnorm(20,1.5,.3)
+
+A <- data.frame(placebo=a, treatment=b)
+AA <- pivot_longer(data=A, cols=c(placebo, treatment), names_to="drug", values_to="effect") |> 
+        mutate(drug=factor(drug, levels=c("placebo", "treatment"))) |> 
+        mutate(group=case_when(drug == "placebo" ~ 0, .default=1)) 
+```
+
+```{r}
+A
+
+AA
+```
+
+```{r}
+# ggplot(A, aes(a,b)) + 
+#   geom_point()
+
+ggplot(AA, aes(drug, effect)) + 
+  geom_point()
+
+ggplot(AA, aes(group, effect)) + 
+  geom_point() + 
+  geom_smooth(method="lm") + 
+  #stat_regline_equation() + 
+  stat_cor() 
+```
+
+```{r}
+t.test(A$placebo, A$treatment) |> tidy()
+```
+
+```{r}
+AA %>% t_test(effect ~ drug)
+```
+
+```{r}
+AA %>% lm(effect ~ drug, data=.) %>% summary() |> tidy()
+```

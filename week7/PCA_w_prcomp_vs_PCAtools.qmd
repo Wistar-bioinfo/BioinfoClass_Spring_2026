@@ -1,0 +1,147 @@
+---
+title: "test"
+format: html
+editor: visual
+---
+
+
+```{r}
+# install.packages("tidyverse")
+# install.packages("PCAtools")
+# install.packages("patchwork")
+# install.packages("broom")
+```
+
+
+## Load libtrary
+```{r, message=FALSE}
+library("tidyverse")
+library("PCAtools")
+library("patchwork")
+library("broom")
+```
+
+```{r}
+iris
+```
+
+### review datasets
+
+```{r}
+iris2 <- iris %>% 
+  mutate(sampe_id=1:n(),
+         sample_name=paste0(sampe_id,"_",Species))
+
+iris_matrix <- iris2 %>% 
+  select(sample_name, Sepal.Length:Petal.Width) %>% 
+  column_to_rownames('sample_name') %>% 
+  t()
+
+iris_metadate <- iris2 %>% 
+  select(sample_name, Species) %>% 
+  column_to_rownames('sample_name')
+```
+
+```{r}
+iris_matrix
+iris_metadate
+```
+
+## PCA with prcomp
+
+```{r}
+pca1 <- prcomp(t(iris_matrix))
+
+pca1_data <- pca1$x %>% 
+  as_tibble(rownames = "sampe_id") %>% 
+  left_join(iris_metadate %>% as_tibble(rownames = "sampe_id"),
+            by = join_by(sampe_id))
+
+pca1_stats <- summary(pca1)$importance %>% as_tibble(rownames = "stats_decription")
+
+pca1_data
+pca1_stats
+```
+
+```{r}
+pc12 <- pca1_data %>% ggplot(aes(PC1, PC2, color = Species)) +
+  geom_point() +
+  theme_minimal()
+
+pc13 <- pca1_data %>% ggplot(aes(PC1, PC3, color = Species)) +
+  geom_point() +
+  theme_minimal()
+
+pc23 <- pca1_data %>% ggplot(aes(PC2, PC3, color = Species)) +
+  geom_point() +
+  theme_minimal()
+
+scr_plot <- pca1_stats %>%  
+  pivot_longer(cols = PC1:PC4, names_to = 'PC', values_to = 'value') %>% 
+  filter(stats_decription=="Proportion of Variance") %>%
+  ggplot(aes(PC, value)) +
+  geom_col(fill='navy') +
+  theme_minimal()
+```
+
+```{r}
+(pc12 + pc13) / (pc23 + scr_plot) + plot_layout(guides = 'collect')
+```
+
+## PCA analysis with PCAtools
+
+```{r}
+pca2 <- pca(iris_matrix, metadata = iris_metadate)
+```
+
+```{r}
+scp <- screeplot(pca2,
+    components = getComponents(pca2, 1:4),
+    axisLabSize = 7, titleLabSize = 8)
+    # vline = c(horn$n, elbow)) #+
+    # 
+    # geom_label(aes(x = horn$n + 1, y = 50,
+    #   label = 'Horn\'s', vjust = -1, size = 8)) +
+    # geom_label(aes(x = elbow + 1, y = 50,
+    #   label = 'Elbow method', vjust = -1, size = 8))
+```
+
+
+```{r}
+p12 <- biplot(pca2,
+       title = 'PC1 versus PC2',
+       x = 'PC1', y = 'PC2',
+       colby = 'Species',
+       hline = 0,
+       vline = 0,
+       lab = NULL,
+       #encircle = TRUE,
+       legendPosition = 'right',
+       axisLabSize = 7, titleLabSize = 8
+       )
+
+p13 <- biplot(pca2,
+       title = 'PC1 versus PC3',
+       x = 'PC1', y = 'PC3',
+       colby = 'Species',
+       hline = 0, 
+       vline = 0,
+       lab = NULL,
+       legendPosition = 'right',
+       axisLabSize = 7, titleLabSize = 8)
+
+p23 <- biplot(pca2,
+       title = 'PC2 versus PC3',
+       x = 'PC2', y = 'PC3',
+       colby = 'Species',
+       hline = 0, 
+       vline = 0,
+       lab = NULL,
+       legendPosition = 'right',
+       axisLabSize = 7, titleLabSize = 8)
+
+```
+
+```{r}
+(p12 | p13) / (pc23  | scp) + plot_layout(guides = 'collect')
+```

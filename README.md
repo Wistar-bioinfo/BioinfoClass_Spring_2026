@@ -137,4 +137,8 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 - [slides](week7/Bioinfo_class_week7_AleGardini_EpiRegulationofTranscription2026.pdf) lecture presented by *__Alessandro Gardini__* (_Associate Professor, Genomics Facility Scientific Director  Wistar Institute_)
 
-  
+##### Thursday - RNAseq practice
+
+- [PCA](week7/PCA_w_prcomp_vs_PCAtools.qmd)
+- [t-test vs lm](Common_stat_test_LM.qmd)
+
