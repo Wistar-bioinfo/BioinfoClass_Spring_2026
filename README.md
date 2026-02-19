@@ -135,6 +135,6 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 ##### Tuesday - Epigenetic Regulation of Gene expression
 
-- [slides](week6/Bioinfo_class_week7_AleGardini_EpiRegulationofTranscription2026.pdf) lecture presented by *__Alessandro Gardini__* (_Associate Professor, Genomics Facility Scientific Director  Wistar Institute_)
+- [slides](week7/Bioinfo_class_week7_AleGardini_EpiRegulationofTranscription2026.pdf) lecture presented by *__Alessandro Gardini__* (_Associate Professor, Genomics Facility Scientific Director  Wistar Institute_)
 
   
