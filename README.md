@@ -106,7 +106,7 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 #### **Week 5:** Introduction to Next Generation Sequencing
 
-##### Tuesday - Theoretical basis for sequencing (Sonali Majumdar)
+##### Tuesday - Theoretical basis for sequencing
 
 -   [slides](week5/Lecture_SonaliMajumdar_spring_2026.pdf) lecture presented by *__Sonali Majumdar__* (_Managing Director, Genomics Facility at Wistar Institute_)
 
@@ -118,11 +118,23 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 
 #### **Week 6:** Gene Regulation
 
+##### Tuesday - Overview of Regulation of Gene expression
+
 - [slides](week6/Bioinfo_class_week6_Gene_Regulation_Sandra_Deliard.pdf) lecture presented by *__Sandra Deliard, PhD__* (_Associate Staff Scientist at Wistar Institute_)
 
 
-#### Thursday - RNAseq practice
+##### Thursday - RNAseq practice
 
 - [notebook](week6/Intro_RNAseq_dge.qmd)
 - [data](week6/data/TCGA_PRAD_counts.tsv.gz)
 - [metadata](week6/data/TCGA_PRAD_metadata.csv)
+
+-----
+
+#### Week 7: Gene Regulation II
+
+##### Tuesday - Epigenetic Regulation of Gene expression
+
+- [slides](week6/Bioinfo_class_week7_AleGardini_EpiRegulationofTranscription2026.pdf) lecture presented by *__Alessandro Gardini__* (_Associate Professor, Genomics Facility Scientific Director  Wistar Institute_)
+
+  
