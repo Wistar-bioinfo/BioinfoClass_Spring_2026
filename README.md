@@ -140,5 +140,5 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 ##### Thursday - RNAseq practice
 
 - [PCA](week7/PCA_w_prcomp_vs_PCAtools.qmd)
-- [t-test vs lm](Common_stat_test_LM.qmd)
+- [t-test vs lm](week7/Common_stat_test_LM.qmd)
 
