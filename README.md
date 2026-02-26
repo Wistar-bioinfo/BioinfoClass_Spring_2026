@@ -157,4 +157,7 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 ##### Thursday - midterm review  
 - practice notebook [qmd](midterm/Example_for_midterm.qmd) [html](midterm/Example_for_midterm.html)
 
+#### Data
+[wine_dataset](midterm/data/wine_data_set.tsv)
+
 
