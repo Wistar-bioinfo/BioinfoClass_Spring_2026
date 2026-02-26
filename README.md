@@ -147,3 +147,14 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 - [how to teach stat](https://lindeloev.github.io/tests-as-linear/)
 
 -----
+
+#### Week 8: Non-coding RNA
+
+##### Tuesday - Non-coding RNA and Transposable Elements (TE)
+
+- [slide](week8/Bioinfo_class_week8_SimonChu_NonCodingRNA_and_TEs.pdf) lecture presented by *__Simon Chu__* (_Caspar Wistar Fellow, Wistar Institute_)
+
+##### Thursday - midterm review  
+- practice notebook [qmd](midterm/Example_for_midterm.qmd) [html](midterm/Example_for_midterm.html)
+
+
