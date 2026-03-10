@@ -3,17 +3,34 @@ title: "Exam Demo"
 author: "JM"
 format: html
 editor: visual
+css: styles.css
 ---
 
 ## Demo document
 
 This is the blueprint of code you can use for work with your data for
 
-## Load libraries
+## Install Packages
 
 ```{r}
-library(tidyverse)
-library(broom)
+# install.packages("tidyverse")
+# install.packages("patchwork")
+# install.packages("broom")
+```
+
+```{r}
+# if (!requireNamespace('BiocManager', quietly = TRUE))
+#     install.packages('BiocManager')
+# 
+# BiocManager::install('PCAtools')
+```
+
+## Load libraries
+
+```{r, message=FALSE}
+library("tidyverse")
+library("broom")
+library("PCAtools")
 ```
 
 ### to oriend where are you in your computer
@@ -28,7 +45,7 @@ path to your data should exist if you have problem to load data look in which di
 
 After loading red text is just message about data no error
 
-```{r}
+```{r, message=FALSE}
 wine_data <- read_tsv("data/wine_data_set.tsv")
 ```
 
@@ -37,11 +54,11 @@ wine_data <- read_tsv("data/wine_data_set.tsv")
 1.  Look at the `head()`
 
 ```{r}
-head(wine_data)
+head(wine_data,3)
 
 # or
 
-wine_data %>% head()
+wine_data %>% head(n=4)
 ```
 
 2.  and the `tail()`
@@ -54,7 +71,7 @@ tail(wine_data)
 wine_data %>% tail()
 ```
 
-3.  what are the dimensions of iris?
+3.  what are the dimensions of wine?
 
 ```{r}
 dim(wine_data)
@@ -64,7 +81,7 @@ dim(wine_data)
 
 4.  Select the first column only using square brackets.
 
-```{r}
+```{r, classes="scrolling"}
 wine_data[,1] %>% head()
 ```
 
@@ -76,7 +93,7 @@ wine_data[42,]
 
 6.  Select rows 35 to 40 and columns 1 and 3 using square brackets.
 
-```{r}
+```{r, classes="scrolling"}
 wine_data[c(35:40), c(1:3)]
 ```
 
@@ -141,7 +158,7 @@ data("coronavirus")
 
 Look at the data. Run the chunk and it will give you a nicely formatted preview of the data.
 
-```{r}
+```{r, classes="scrolling"}
 coronavirus %>% head()
 ```
 
@@ -149,18 +166,31 @@ coronavirus %>% head()
 
 In this second section, the questions get a little harder. You'll need to give more than one argument to the dplyr functions and chain multiple functions together. Again, use the code chunk below each question to give your answer.
 
+```{r, classes="scrolling"}
+coronavirus %>% select(province:iso2,date)
+```
+
 ------------------------------------------------------------------------
 
 8.  Find the minimum and maximum numbers of cases.
 
 ```{r}
+min(coronavirus$cases)
+max(coronavirus$cases)
+```
+
+```{r}
 coronavirus %>%
-  summarize(min(cases), max(cases))
+  summarize("Cases_Min" = min(cases), "Cases_Max" = max(cases))
 ```
 
 9.  Use `arrange()` to rearrange the coronavirus table so the latest date is first. (By latest I mean the closest data to today, for example April 1 2020-04-01 is closer to today than January first 2020-01-01).
 
-```{r}
+```{r, classes="scrolling"}
+coronavirus %>%
+  arrange(date) %>%
+  head()
+
 coronavirus %>%
   arrange(desc(date)) %>%
 
@@ -169,44 +199,47 @@ coronavirus %>%
 
 10. Find the total number of cases per country
 
-```{r}
+```{r, classes="scrolling"}
 coronavirus %>%
   group_by(country) %>%
   summarize(total_cases = sum(cases)) %>%
-  ungroup() %>%
-
-  head()
+  ungroup() 
 ```
 
 11. Find the total number of cases per date
 
-```{r}
+```{r, classes="scrolling"}
 coronavirus %>%
   group_by(date) %>%
   summarize(total_cases = sum(cases)) %>%
-  ungroup()   %>%
-
-  head()
+  ungroup()
 ```
 
 12. Find the number of cases by country and type
 
-```{r}
+```{r, classes="scrolling"}
 coronavirus %>%
   group_by(country, type) %>%
   summarize(total_cases = sum(cases)) %>%
-  ungroup() %>%
+  ungroup()
 
-  head()
+coronavirus %>%
+  summarize(total_cases = sum(cases), .by = c(country, type)) 
 ```
 
 13. Find the country with the greatest number of cases so far
 
-```{r}
+```{r, classes="scrolling"}
 coronavirus %>%
   group_by(country) %>%
   summarize(total_cases = sum(cases)) %>%
   ungroup() %>%
+  arrange(desc(total_cases))
+```
+
+```{r, classes="scrolling"}
+coronavirus %>%
+  summarize(total_cases = sum(cases), .by = country) %>%
   arrange(desc(total_cases)) %>%
 
   head()
@@ -214,7 +247,7 @@ coronavirus %>%
 
 14. Find the number of cases per Canadian province.
 
-```{r}
+```{r, classes="scrolling"}
 coronavirus %>%
   filter(country == 'Canada') %>%
   group_by(country, province) %>%
@@ -223,7 +256,7 @@ coronavirus %>%
 
 15. Find the mean and standard deviation of the cases by country
 
-```{r}
+```{r, classes="scrolling"}
 coronavirus %>%
   group_by(country) %>%
   summarize(average = mean(cases),
@@ -234,16 +267,21 @@ coronavirus %>%
 
 16. Add a column to the `coronavirus` table labelling whether the daily case total is greater than or equal to 100
 
-```{r}
+```{r, classes="scrolling"}
 coronavirus %>% 
-  mutate(great100 = ifelse(cases >= 100, T, F)) %>%
+  mutate(lat_long = lat + long)
+```
+
+```{r, classes="scrolling"}
+coronavirus %>% 
+  mutate(great100 = if_else(cases >= 100, T, F)) %>%
 
   head()
 ```
 
 17. How many countries have average daily case totals greater than 100?
 
-```{r}
+```{r, classes="scrolling"}
 coronavirus %>%
   group_by(country) %>% 
   summarize(average_cases = mean(cases)) %>%
@@ -255,7 +293,7 @@ coronavirus %>%
 
 18. How many countries do we have data for in the northern (lat \> 0) and southern (lat \< 0) hemispheres?
 
-```{r}
+```{r, classes="scrolling"}
 coronavirus %>%
   mutate(hemisphere = ifelse(lat > 0, 'north', 'south')) %>%
   select(country, hemisphere) %>% 
@@ -269,7 +307,7 @@ coronavirus %>%
 
 ```{r}
 wine_data %>% 
-  ggplot(aes(Color, Hue)) +
+  ggplot(aes(x = Color, y = Hue)) +
   geom_point()
 ```
 
@@ -278,6 +316,10 @@ wine_data %>%
 ```{r}
 wine_data %>% 
   ggplot(aes(x=Color, y=Hue, color=Alcohol, shape = Type)) +
+  geom_point()
+
+wine_data %>% 
+  ggplot(aes(x=Color, y=Hue, color= Type)) +
   geom_point()
 ```
 
@@ -297,7 +339,7 @@ wine_data %>%
 wine_data %>% 
   ggplot(aes(x=Color, y=Hue, color = Type)) +
   geom_point()+
-  geom_smooth(method = 'lm') +
+  geom_smooth(method = 'lm',se = FALSE) +
   theme_bw()
 ```
 
@@ -306,7 +348,8 @@ wine_data %>%
 ```{r}
 wine_data %>% 
   ggplot(aes(x=Type, y=Color, fill = Type)) +
-  geom_boxplot()+
+  geom_boxplot() +
+  #geom_jitter(width = 0.25) +
   theme_classic()
 ```
 
@@ -314,19 +357,26 @@ wine_data %>%
 
 ```{r}
 wine_data %>% 
+  ggplot(aes(x=Alcohol, color=Type)) +
+  geom_density(size=3)
+
+wine_data %>% 
   ggplot(aes(x=Alcohol, fill = Type)) +
-  geom_density(alpha=0.2)+
+  geom_density(alpha=0.2) +
   theme_classic()
 ```
 
 7.  another option to make density plot more readeble is to facet plot by Type, so wi add facet
 
 ```{r}
-wine_data %>% 
+ wine_data %>% 
+  mutate(Alcohol_high_low = if_else(Alcohol > 12.5, "high","low")) %>% 
   ggplot(aes(x=Alcohol, fill = Type, color=Type)) +
   geom_density(alpha=0.2) +
-  facet_wrap(~Type) +
+  facet_wrap( ~ Type) +
   theme_classic()
+
+ggsave("pictures/density_2.pdf")
 ```
 
 ## Statistics
@@ -396,4 +446,57 @@ wine_data %>%
   tidy()
 
 ## conclusion: this is statistically significant correlation between Alcohol and Color apply across all type
+```
+
+### Principal Component Analysis
+
+```{r}
+## manipulate dataset
+iris2 <- iris %>% 
+  mutate(sampe_id=1:n(),
+         sample_name=paste0(sampe_id,"_",Species)) %>% 
+  select(sample_name, Species, Sepal.Length:Petal.Width)
+
+iris_matrix <- iris2 %>% 
+  select(sample_name, Sepal.Length:Petal.Width) %>% 
+  column_to_rownames('sample_name') %>% 
+  t()
+
+iris_metadata <- iris2 %>% 
+  select(sample_name, Species) %>% 
+  column_to_rownames('sample_name')
+```
+
+```{r}
+pca_result <- pca(iris_matrix, metadata = iris_metadata)
+```
+
+
+```{r}
+screeplot(pca_result)
+
+biplot(pca_result)
+```
+
+
+```{r}
+scp <- screeplot(pca_result,
+    components = 1:4,
+    axisLabSize = 7, titleLabSize = 8)
+
+scp + theme_classic()
+```
+
+```{r}
+biplot(pca_result,
+       title = 'PC1 versus PC2',
+       x = 'PC1', y = 'PC2',
+       colby = 'Species',
+       hline = 0,
+       vline = 0,
+       lab = NULL,
+       # encircle = TRUE,
+       legendPosition = 'right',
+       axisLabSize = 7, titleLabSize = 8
+       )
 ```

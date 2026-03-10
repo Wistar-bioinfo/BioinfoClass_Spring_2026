@@ -161,3 +161,52 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 [wine_dataset](midterm/data/wine_data_set.tsv)
 
 
+#### Week 9: Example of Machine Learning on biological datasets
+
+##### Tuesday - Machine Learning on datasets of hERV
+- [slide](week9/missing_file.pdf) lecture presented by *__Andrew Patterson__* (_Computational Biologist, Wistar Institute_)
+
+##### Thursday - midterm review
+
+------------------------------------------------------------------------
+
+#### Midterm assigment
+
+##### Exampe RStudio files
+
+-   data files:
+    -   [wine_data_set](midterm/data/wine_data_set.tsv)
+-   [qmd](midterm/Example_for_midterm.qmd)
+-   [html](midterm/Example_for_midterm.html)
+
+##### Assigment
+
+-   data files: you will need to download folowing data:
+    -   [mice_weights_and_diet](midterm/data/mice_weights_and_diet.tsv)
+    -   [tissue_gene_expression](midterm/data/tissue_gene_expression.tsv)
+
+fill in this quarto markdown (qmd) template file with your answers and send it to me
+- [qmd blank](midterm/exam_spring_2026_blank.qmd) - [html blank](midterm/exam_spring_2026_blank.html)
+
+------------------------------------------------------------------------
+
+#### Please, send me back your filled up Quarto Markdown (qmd) document to [jmadzo@wistar.org](mailto:jmadzo@wistar.org)
+
+##### notes:
+
+-   please, provide verbal answer (one sentence) for statatistical questions: 
+Is there or isn't there statistically significant difference in values/parameters/features you testing
+
+-   beside qmd file, try to make html document as well (it will be useful for your future reference)
+
+------------------------------------------------------------------------
+
+#### Solution:
+here will be expected solution in [html](midterm/exam_spring_2026.html)
+
+
+------------------------------------------------------------------------
+
+
+
+

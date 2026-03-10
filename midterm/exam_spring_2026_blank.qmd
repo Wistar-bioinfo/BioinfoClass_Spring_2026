@@ -1,0 +1,241 @@
+---
+title: "Bioinformatics Midterm exam spring 2026"
+author: "Write your name here"
+format: html
+editor: visual
+css: styles.css
+---
+
+### Load libraries
+
+you will need "tidyverse", "broom" and "ggbeeswarm" (hint `library()`) if you miss any library install it with `install.packages()`
+```{r, message=FALSE}
+
+```
+
+### Load dataset
+
+1.  load mice_weights_and_diet.tsv data sets and tissue_gene_expression.tsv (hint `read_tsv`)
+```{r, message=FALSE}
+
+```
+
+------------------------------------------------------------------------
+
+### Examine Data
+
+2.  Inspect the  mice_weights object with `head()`, `tail()`
+```{r}
+
+```
+
+3.  What are the dimensions of mice_weights?
+```{r}
+
+```
+
+### Subsetting Data using base R
+
+4.  Select the 2nd column of mice_weights only using square brackets.
+```{r}
+
+```
+
+5.  Select the 42nd row of mice_weights using square brackets.
+```{r}
+
+```
+
+6.  Select rows 10 to 25 and columns 1 and 5 using square brackets from mice_weights.
+```{r}
+
+```
+
+7.  Select the `sex` column using a dollar sign from mice_weights
+```{r}
+
+```
+
+8.  Find the the minimum and maximum of mice_weights
+```{r}
+
+```
+
+9.  Use `arrange()` to rearrange the "percent_fat" table so the largest entry is the first in mice_weights
+```{r}
+
+```
+
+10. Find the mean and standard deviation of litter size for female sex (hint: use `filter`, `group_by()`, `summarize`) from mice_weights.
+```{r}
+
+```
+
+11. Find the find average weights and standard deviation for male and female on different diets (hint: use `group_by()`) in mice_weights dataset.
+```{r}
+
+```
+
+------------------------------------------------------------------------
+
+## Graphics
+
+12. load `tissue gene expression` if you didn't do at at step 1 and look at it with `head()`
+```{r}
+
+```
+
+### Scater plot
+
+13. from "Tissue Gene Expression" dataset make scatter plot of correlation of two randomly selected genes
+```{r}
+
+```
+
+#### Scater plot w/ linear fit
+
+14. add linear trend line to you plot and change the plot theme with `theme_bw()` or `theme_classic()` or `theme_minimal()` or any other `theme_...` extension
+```{r}
+
+```
+
+15. Modified previous plot by splitting data by tissue of origin when plotting this correlation and switching off standard error `se = F` option
+```{r}
+
+```
+
+### Box plot
+
+16. Pick one random gene and make Box plot of it with tissues type on x-axis, expression level on y-axis and color (`fill` color) by tissue.
+```{r}
+
+```
+
+### Density plot
+
+17. change previous plot of your randomly selected gene to density plot and color by tissue type (set `alpha=0.2` in density plot)
+```{r}
+
+```
+
+18 to make previous plot more informative facet this plot by tissue use as theme try to use `theme_minimal()`
+```{r}
+
+```
+
+------------------------------------------------------------------------
+
+## Statistical test
+
+### T.Test
+
+19. Go back to mice_weights dataset and plot *Box plot* of `body_weight` by diet and sex (use color and faceting)
+(e.g. x-axis `sex`, y-axis `body_weight` ,facet by `diet`)
+(extra bonus: if you want to make it prettier add the points to your boxplot with `geom_quasirandom(alpha= 0.5)`)
+```{r}
+
+```
+
+20. In mice_weights dataset: Q: Is there effect of diet on weight? (hint use t.test)
+**Plesase answer the question in writing! One sentence is enought.**
+```{r}
+
+```
+
+21. In mice_weights dataset Q: is there effect of sex on weight? (use t.test)
+**Plesase answer the question in writing! One sentence is enought.**
+```{r}
+
+```
+
+### ANOVA
+
+22. re-plot box plot step 16. Now using ANOVA-test `aov` test if the expression of your gene is different across tissues types Q: Is there a difference of your gene expression across tissue types? Is at least one tissue different in expression then other?
+**Plesase answer the question in writing! One sentence is enought.**
+```{r}
+
+```
+
+23. Do post-hoc test of 22. If you see your Anova-test to be significant, at least one tissue has different expression. Which one (two or more) is/are different? 
+Q1: Which two tissue are the most different in your gene expression analysis, 
+Q2: Is there any pair where the difference in expression is not significant (expression is same or comparable)?
+**Plesase answer the questions in writing! One sentence is enought.**
+```{r}
+
+```
+
+------------------------------------------------------------------------
+
+### Linear modeling
+
+Test linear dependence of two genes that you previously piked in steps 13-15 from Gene Expression dataset.
+
+24. Redo plot you did at step 14:
+-   re-plot gene1 against gene2
+```{r}
+
+```
+
+25. Test in linear model if this two genes are dependent (correlated) or not: 
+Q: Is the expression between your two genes lineary dependent (correlated)? (H0: no correlation)
+**Plesase answer the question in writing! One sentence is enought.**
+```{r}
+
+```
+
+### Bonus
+
+26. Bonus: if you do not feel like you can do it just skip it:
+In `mice weights dataset`; Can you put together step 20 and 21 in one test that will test for diet and sex simultaneously ?
+(hint use linear model with covariet `lm( y ~ x1 + x2 )`)
+```{r}
+
+```
+
+------------------------------------------------------------------------
+
+### Principal Component Analysis (PCA)
+
+Run PCA on tissue expression dataset preferably use `PCAtools` package
+
+If you do not have PCAtools install them with uncomenting and running following code:
+```{r}
+# if (!require("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager")
+# 
+# BiocManager::install("PCAtools")
+```
+
+```{r}
+library("PCAtools")
+```
+
+To help you reformat data, here is reformating step 
+```{r}
+data_4_pca <- your_gene_expression %>%
+  select(-tissue) %>%
+  column_to_rownames("sample") %>%
+  t() %>%
+  as_tibble(rownames="geneID") %>%
+  column_to_rownames("geneID")
+
+metadata_4_pca <- your_gene_expression %>%
+  select(sample, tissue) %>%
+  column_to_rownames("sample")
+```
+
+27. run PCA (easiest is to use `pca()` from PCAtools package)
+```{r}
+
+```
+
+28 plot *Screenplot* that shows inportance of copmonents (hint use `screeplot()` function).
+Please do not plot all components 1:10 is enought! (hint use option `components = 1:10`)
+```{r}
+
+```
+
+29 Make Scatter plot of few first PCs *Biplot* (hint use `biplot` and use option `colby = 'tissue'`)
+```{r}
+
+```
