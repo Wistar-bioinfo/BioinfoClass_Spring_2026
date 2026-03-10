@@ -155,10 +155,7 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 - [slide](week8/Bioinfo_class_week8_SimonChu_NonCodingRNA_and_TEs.pdf) lecture presented by *__Simon Chu__* (_Caspar Wistar Fellow, Wistar Institute_)
 
 ##### Thursday - midterm review  
-- practice notebook [qmd](midterm/Example_for_midterm.qmd) [html](midterm/Example_for_midterm.html)
-
-#### Data
-[wine_dataset](midterm/data/wine_data_set.tsv)
+- practice part 1
 
 
 #### Week 9: Example of Machine Learning on biological datasets
@@ -167,30 +164,35 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 - [slide](week9/missing_file.pdf) lecture presented by *__Andrew Patterson__* (_Computational Biologist, Wistar Institute_)
 
 ##### Thursday - midterm review
+- practice part 2
 
 ------------------------------------------------------------------------
 
-#### Midterm assigment
+### Midterm assigment
 
-##### Exampe RStudio files
+#### Exampe RStudio files
 
 -   data files:
     -   [wine_data_set](midterm/data/wine_data_set.tsv)
+
+notebook
 -   [qmd](midterm/Example_for_midterm.qmd)
 -   [html](midterm/Example_for_midterm.html)
 
-##### Assigment
-
--   data files: you will need to download folowing data:
-    -   [mice_weights_and_diet](midterm/data/mice_weights_and_diet.tsv)
-    -   [tissue_gene_expression](midterm/data/tissue_gene_expression.tsv)
+#### Assigment
 
 fill in this quarto markdown (qmd) template file with your answers and send it to me
-- [qmd blank](midterm/exam_spring_2026_blank.qmd) - [html blank](midterm/exam_spring_2026_blank.html)
+- [qmd blank](midterm/exam_spring_2026_blank.qmd)
+- [html blank](midterm/exam_spring_2026_blank.html)
+
+- data files: you will need to download folowing data:
+    - [mice_weights_and_diet](midterm/data/mice_weights_and_diet.tsv)
+    - [tissue_gene_expression](midterm/data/tissue_gene_expression.tsv)
+
 
 ------------------------------------------------------------------------
 
-#### Please, send me back your filled up Quarto Markdown (qmd) document to [jmadzo@wistar.org](mailto:jmadzo@wistar.org)
+##### Please, send me back your filled up Quarto Markdown (qmd) document to [jmadzo@wistar.org](mailto:jmadzo@wistar.org)
 
 ##### notes:
 
@@ -206,7 +208,6 @@ here will be expected solution in [html](midterm/exam_spring_2026.html)
 
 
 ------------------------------------------------------------------------
-
 
 
 
