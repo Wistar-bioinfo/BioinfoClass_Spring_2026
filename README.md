@@ -216,6 +216,6 @@ here will be expected solution in [html](midterm/exam_spring_2026.html)
 -   [slides](week10/Bioinfo_class_week9_04_28_2025_Kossenkov_Spatial.pdf )
 
 
-##### Thursday - Statistic test parctice section
+##### Thursday - Introduction to Linux
 
 -   [slides](week10/Intro_to_Linux_2026.pdf)
