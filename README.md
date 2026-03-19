@@ -211,7 +211,7 @@ here will be expected solution in [html](midterm/exam_spring_2026.html)
 
 
 
-#### Week 8: Spatial Transcriptomics / Intro to Linux
+#### Week 10: Spatial Transcriptomics / Intro to Linux
 
 -   [slides](week10/Bioinfo_class_week9_04_28_2025_Kossenkov_Spatial.pdf )
 
