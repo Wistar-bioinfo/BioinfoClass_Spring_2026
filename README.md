@@ -213,9 +213,21 @@ here will be expected solution in [html](midterm/exam_spring_2026.html)
 
 #### Week 10: Spatial Transcriptomics / Intro to Linux
 
--   [slides](week10/Bioinfo_class_week9_04_28_2025_Kossenkov_Spatial.pdf )
+-   [slides](week10/Bioinfo_class_week9_04_28_2025_Kossenkov_Spatial.pdf ) lecture presented by *__Andrew Kossenkov__* (_Associate Profesor, Wistar Institute_)
 
 
 ##### Thursday - Introduction to Linux
 
 -   [slides](week10/Intro_to_Linux_2026.pdf)
+
+------------------------------------------------------------------------
+
+
+#### Week 11: Post-transcriptional Gene Regulation from RNA-seq  / Intro to Linux
+
+-   [slides](week11/Bioinfo_class_week11_BinTian_RNAmodification.pdf ) lecture presented by *__Bin Tian__* (_Profesor, Wistar Institute_)
+
+
+##### Thursday - Introduction to Linux
+
+-   [slides](week11/Intro_to_Linux.pdf)
