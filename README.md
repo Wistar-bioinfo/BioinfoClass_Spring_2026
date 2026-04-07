@@ -231,3 +231,19 @@ here will be expected solution in [html](midterm/exam_spring_2026.html)
 ##### Thursday - Introduction to Linux
 
 -   [slides](week11/Intro_to_Linux.pdf)
+
+
+-   ](week10/Intro_to_Linux_2026.pdf)
+
+------------------------------------------------------------------------
+
+
+#### Week 14: Public databases
+
+-   [slides](week14/Bioinfo_class_week12_2026_JM_publicDB_intro.pdf) 
+   
+##### Thursday - 
+
+-   [slides]
+
+
