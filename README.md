@@ -236,11 +236,13 @@ here will be expected solution in [html](midterm/exam_spring_2026.html)
 ------------------------------------------------------------------------
 
 #### Week 13: Human microbiome
-- [slides](week13/Bioinfo_class_week11_AnastasiaLucas_Microbiom.pdf)by Anastasia Lucas, University of Pennsylvania
+- [slides](week13/Bioinfo_class_week11_AnastasiaLucas_Microbiom.pdf) lecture presented by Anastasia Lucas, University of Pennsylvania
 - more resorces:[Bioinformatics Director at CHOP Microbiome Center](https://github.com/kylebittinger/microbiome-data-science)
 
 ##### Thursday
 -	Easter break - canceled
+
+------------------------------------------------------------------------
 
 #### Week 14: Public databases
 
@@ -248,6 +250,6 @@ here will be expected solution in [html](midterm/exam_spring_2026.html)
 
 ##### Thursday - Midterm solution
 
--   [notebook](exam_spring_2026.qmd)
--   [html](exam_spring_2026.html)
+-   [notebook](week14/exam_spring_2026.qmd)
+-   [html](week14/exam_spring_2026.html)
 
