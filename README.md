@@ -236,7 +236,7 @@ here will be expected solution in [html](midterm/exam_spring_2026.html)
 ------------------------------------------------------------------------
 
 #### Week 13: Human microbiome
-- [slides](week13/Bioinfo_class_week11_AnastasiaLucas_Microbiom.pdf) lecture presented by Anastasia Lucas, University of Pennsylvania
+- [slides](week13/Bioinfo_class_week11_AnastasiaLucas_Microbiom.pdf) lecture presented by *__Anastasia Lucas__*, (_graduate student at University of Pennsylvania_)
 - more resorces:[Bioinformatics Director at CHOP Microbiome Center](https://github.com/kylebittinger/microbiome-data-science)
 
 ##### Thursday
