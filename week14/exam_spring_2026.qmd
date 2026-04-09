@@ -1,0 +1,327 @@
+---
+title: "Bioinformatics Midterm Exam 2026"
+author: "write your name here"
+format: html
+editor: visual
+css: styles.css
+---
+
+## Load libraries
+
+you will need "tidyverse", "broom" and "ggbeeswarm" (hint `library()`) if you miss library install it with `install.packages()`
+
+```{r, message=FALSE}
+library(tidyverse)
+library(broom)
+library(ggbeeswarm)
+```
+
+## Load dataset
+
+1.  load "mice_weights_and_diet.tsv" data sets and tissue_gene_expression.tsv
+
+```{r, message=FALSE}
+mice_weights <- read_tsv("data/mice_weights_and_diet.tsv")
+
+GeneExpression <- read_tsv("data/tissue_gene_expression.tsv")
+```
+
+------------------------------------------------------------------------
+
+## Examine Data
+
+2.  Inspect the  mice_weights object with `head()`, `tail()`
+
+```{r}
+mice_weights %>% head()
+mice_weights %>% tail()
+```
+
+3.  What are the dimensions of mice_weights?
+
+```{r}
+dim(mice_weights)
+```
+
+### Subsetting Data using base R
+
+4.  Select the 2nd column of mice_weights only using square brackets.
+
+```{r}
+mice_weights[,2] %>% head()
+```
+
+5.  Select the 42nd row of mice_weights using square brackets.
+
+```{r}
+mice_weights[42,]
+```
+
+6.  Select rows 10 to 25 and columns 1 and 5 using square brackets from mice_weights.
+
+```{r}
+mice_weights[10:25,c(1,5)]
+```
+
+7.  Select the `sex` column using a dollar sign from mice_weights
+
+```{r}
+mice_weights$sex %>% head
+```
+
+8.  Find the the minimum and maximum of mice_weights
+
+```{r}
+mice_weights %>%
+  summarize(min(body_weight), max(body_weight))
+```
+
+9.  Use `arrange()` to rearrange the "percent_fat" table so the largest entry is the first in mice_weights
+
+```{r}
+mice_weights %>%
+  arrange(desc(percent_fat)) %>% head()
+```
+
+10. Find the mean and standard deviation of litter size for female sex (hint: use `filter`, `group_by()`, `summarize`) from mice_weights.
+
+```{r}
+mice_weights %>%
+  filter(sex == "F") %>% 
+  group_by(diet) %>%
+  summarize(average = mean(litter),
+            stdev = sd(litter))
+```
+
+11. Find the find average weights and standard deviation for male and female on different diets (hint: use `group_by()`) in mice_weights dataset.
+
+```{r}
+mice_weights %>%
+  group_by(sex, diet) %>%
+  summarize(average = mean(body_weight),
+            stdev = sd(body_weight))
+```
+
+------------------------------------------------------------------------
+
+## Graphics
+
+12. load `tissue gene expression` if you didn't do at at step 1 and look at it with `head()`
+
+```{r}
+# GeneExpression <- read_tsv("data/tissue_gene_expression.tsv")
+
+GeneExpression %>% head()
+```
+
+### scater plot
+
+13. from "Gene Expression" dataset make scatter plot of correlation of two randomly selected genes
+
+```{r}
+GeneExpression %>% 
+  ggplot(aes(SOX12, INF2)) +
+  geom_point()
+```
+#### Scater plot w/ linear fit
+
+14. add linear trend line to you plot and change the plot theme with `theme_bw()` or `theme_classic()` or `theme_minimal()` or any other `theme_...` extension
+
+```{r}
+GeneExpression %>% 
+  ggplot(aes(SOX12, INF2)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_minimal()
+```
+
+15. Modified previous plot by splitting data by tissue of origin when plotting this correlation and switching off standard error `se = F` option
+
+```{r}
+GeneExpression %>% 
+  ggplot(aes(SOX12, INF2, color = tissue)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F) +
+  theme_bw()
+```
+
+### Box plot
+
+16. Pick one random gene and make Box plot of it with tissues type on x-axis, expression level on y-axis and color (`fill` color) by tissue.
+
+```{r}
+GeneExpression %>% 
+  ggplot(aes(x = tissue, y=INF2, fill = tissue)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  theme_bw()
+```
+
+### Density plot
+
+17. change previous plot of your randomly selected gene to density plot and color by tissue type (set `alpha=0.2` in density plot)
+
+```{r}
+GeneExpression %>% 
+  ggplot(aes(x=INF2, color = tissue, fill=tissue)) +
+  geom_density(alpha=0.2) +
+  theme_bw()
+```
+
+18 to make previous plot more informative facet this plot by tissue use as theme try to use `theme_minimal()`
+
+```{r}
+GeneExpression %>% 
+  ggplot(aes(x=INF2, color = tissue, fill=tissue)) +
+  geom_density(alpha=0.2) +
+  facet_wrap(~ tissue) +
+  theme_minimal()
+```
+
+------------------------------------------------------------------------
+
+## Statistical test
+
+### T.Test
+
+19. Go back to mice_weights dataset and plot *Box plot* of `body_weight` by diet and sex (use color and faceting)
+(e.g. x-axis `sex`, y-axis `body_weight` ,facet by `diet`)
+(extra if you want to make it prettier add points to your boxplot with, try tu use `geom_quasirandom(alpha= 0.5)`)
+```{r}
+mice_weights %>%
+  ggplot(aes(x= sex, y = body_weight, fill=diet)) +
+  geom_boxplot(outliers = FALSE) +
+   geom_quasirandom(alpha= 0.5) +
+  facet_wrap( ~ diet) +
+  theme_bw()
+```
+
+20. In mice_weights dataset: Q: Is there effect of diet on weight? (hint use t.test)
+**Plesase answer the question in writing! One sentence is enought.**
+```{r}
+mice_weights %>% t.test(body_weight ~ diet, data = .) %>% tidy()
+```
+
+21. In mice_weights dataset Q: is there effect of sex on weight? (use t.test)
+**Plesase answer the question in writing! One sentence is enought.**
+```{r}
+mice_weights %>% t.test(body_weight ~ sex, data = .) %>% tidy()
+```
+
+### ANOVA
+
+22. re-plot box plot step 16. Now using ANOVA-test `aov` test if the expression of your gene is different across tissues types Q: Is there a difference of your gene expression across tissue types? Is at least one tissue different in expression then other?
+**Plesase answer the question in writing! One sentence is enought.**
+```{r}
+GeneExpression %>% 
+  ggplot(aes(x = tissue, y=INF2, fill = tissue)) +
+  geom_boxplot() +
+  geom_quasirandom() +
+  theme_bw()
+
+GeneExpression %>% select(tissue, INF2) %>% 
+  aov(INF2 ~ as.factor(tissue), data = .) %>% tidy()
+```
+
+23. Do post-hoc test of 22. If you see your Anova-test to be significant, at least one tissue has different expression. Which one (two or more) is/are different? 
+Q1: Which two tissue are the most different in your gene expression analysis, 
+Q2: Is there any pair where the difference in expression is not significant (expression is same or comparable)?
+**Plesase answer the question in writing! One sentence is enought.**
+```{r}
+GeneExpression %>% select(tissue, INF2) %>% 
+  aov(INF2 ~ as.factor(tissue), data = .) %>% TukeyHSD() %>% tidy()
+```
+------------------------------------------------------------------------
+
+### Linear modeling
+
+Test linear dependence of two genes that you previously piked in steps 13-15 from Gene Expression dataset.
+
+24. Redo plot you did at step 14:
+-   re-plot gene1 against gene2
+```{r}
+GeneExpression %>% 
+  ggplot(aes(SOX12, INF2)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F) +
+  theme_bw()
+```
+
+25. Test in linear model if this two genes are dependent (correlated) or not: 
+Q: Is the expression between your two genes lineary dependent (correlated)? (H0: no correlation)
+**Plesase answer the question in writing! One sentence is enought.**
+```{r}
+GeneExpression %>% 
+  lm(INF2 ~ SOX12, data = .) %>% 
+  summary() %>% 
+  tidy()
+```
+
+
+### Bonus
+
+26. Bonus: In `mice weights dataset`; Can you put together step 20 and 21 in one test that will test for diet and sex simultaneously ?
+(hint use linear model with covariet `lm( y ~ x1 + x2 )`)
+```{r}
+model <- lm(body_weight ~ diet + sex, data = mice_weights)
+summary(model) %>% tidy()
+```
+
+------------------------------------------------------------------------
+
+### Principal Component Analysis (PCA)
+
+Run PCA on tissue expression dataset preferably use `PCAtools` package
+
+If you do not have PCAtools install them with uncomenting and running following code:
+```{r}
+# if (!require("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager")
+# 
+# BiocManager::install("PCAtools")
+```
+
+```{r}
+library("PCAtools")
+```
+
+To help you reformat data, here is reformating step 
+```{r}
+data_4_pca <- GeneExpression %>% 
+  select(-tissue) %>% 
+  column_to_rownames("sample") %>% 
+  t() %>%
+  as_tibble(rownames="geneID") %>% 
+  column_to_rownames("geneID")
+
+
+metadata_4_pca <- GeneExpression %>%  # your_gene_expression
+  select(sample, tissue) %>% 
+  column_to_rownames("sample")
+```
+
+27. run PCA
+
+```{r}
+pca_expression <- pca(data_4_pca, metadata = metadata_4_pca)
+```
+
+28 plot *Screenplot* that shows inportance of copmonents (hint use `screeplot()` function).
+Please do not plot all components 1:10 is enought! (hint `components = 1:10`) 
+```{r}
+screeplot(pca_expression, components = 1:10)
+```
+29 Make Scatter plot of few first PCs (hint use `biplot` and `colby = 'tissue'`,)
+```{r}
+biplot(pca_expression,
+       title = 'PC1 versus PC2',
+       x = 'PC1', y = 'PC2',
+       colby = 'tissue',
+       hline = 0,
+       vline = 0,
+       lab = NULL,
+       legendPosition = 'right',
+       axisLabSize = 10, titleLabSize = 14
+       )
+```
+
