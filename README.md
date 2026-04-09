@@ -157,6 +157,7 @@ resource about [Markdown](https://www.markdownguide.org/cheat-sheet/)
 ##### Thursday - midterm review  
 - practice part 1
 
+------------------------------------------------------------------------
 
 #### Week 9: Example of Machine Learning on biological datasets
 
@@ -253,3 +254,6 @@ here will be expected solution in [html](midterm/exam_spring_2026.html)
 -   [notebook](week14/exam_spring_2026.qmd)
 -   [html](week14/exam_spring_2026.html)
 
+
+###### Revisit the RNAseq analysis:
+-   [notebook](week6/Intro_RNAseq_dge.qmd)
