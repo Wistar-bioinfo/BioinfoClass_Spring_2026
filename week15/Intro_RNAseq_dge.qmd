@@ -1,0 +1,225 @@
+---
+title: "JM"
+author: "RNAseq: Differential Expression"
+format: html
+editor: visual
+---
+
+## Load libraries
+
+```{r}
+# install.packages("here")
+# install.packages("tidyverse")
+# install.packages("edgeR")
+# install.packages("GMCM")
+
+
+# Make sure you have devtools installed
+# install.packages("devtools")
+
+# Then install using devtools::install_github
+# devtools::install_github("coriell-research/coriell")
+```
+
+## Load libraries
+```{r}
+suppressPackageStartupMessages(library('here'))
+suppressPackageStartupMessages(library('tidyverse'))
+suppressPackageStartupMessages(library('edgeR'))
+suppressPackageStartupMessages(library('GMCM'))
+suppressPackageStartupMessages(library('coriell'))
+# suppressPackageStartupMessages(library('ggrepel'))
+```
+
+## Load data
+```{r, message=FALSE}
+tcga_data <- read_tsv("../week6/data/TCGA_PRAD_counts.tsv.gz")
+```
+
+```{r, message=FALSE}
+metadata <- read_csv(here("week6","data","TCGA_PRAD_metadata.csv"))
+```
+
+```{r}
+tcga_data %>% head()
+tcga_data %>% dim()
+```
+
+```{r}
+metadata %>% head()
+```
+
+### transform data
+```{r}
+gene_data_matrix <- tcga_data %>% 
+  column_to_rownames("gene_name") %>% 
+  as.matrix()
+
+gene_data_matrix[1:5,1:8]
+```
+
+## PCA
+
+```{r}
+gene_data_matrix <- gene_data_matrix %>% 
+  replace(is.na(.), 0)
+
+gene_data_matrix %>% dim()
+  
+index_SD <- gene_data_matrix %>% GMCM:::rowSds(.) > 0
+
+gene_data_matrix <- gene_data_matrix[index_SD,]
+
+gene_data_matrix %>% dim()
+```
+
+```{r}
+pca_gene_exp <- gene_data_matrix %>% t() %>% prcomp(center = TRUE, scale=TRUE)
+
+pca_summary_stats <- summary(pca_gene_exp)$importance %>% t() %>% as_tibble(rownames="PCs")
+
+pca_summary_stats
+```
+
+```{r}
+pca_summary_stats %>% 
+  head(9) %>% 
+  ggplot(aes(PCs, `Proportion of Variance`)) +
+    geom_col(fill="navy") +
+    theme_bw()
+```
+
+
+```{r}
+pca_gene_exp$x[,1:9] %>% 
+  as_tibble(rownames = "sample_ID")
+
+metadata
+```
+
+
+```{r}
+pca_data <- pca_gene_exp$x[,1:9] %>% 
+  as_tibble(rownames = "sample") %>% 
+  bind_cols(metadata)
+```
+
+```{r}
+pca_data %>% 
+  ggplot(aes(x=PC1, y=PC2, color=type)) +
+    geom_point(size=2.5, alpha=0.75) +
+    theme_bw()
+
+pca_data %>% 
+  ggplot(aes(x=PC2, y=PC3, color=type)) +
+    geom_point(size=2.5, alpha=0.75) +
+    theme_bw()
+
+pca_data %>% 
+  ggplot(aes(x=PC1, y=PC3, color=type)) +
+    geom_point(size=2.5, alpha=0.75) +
+    theme_bw()
+```
+
+
+```{r}
+# Initialize the edgeR object
+dge <- DGEList(counts = gene_data_matrix,
+               group = metadata$type,
+               genes = rownames(gene_data_matrix))
+
+#  normalization steps independent from our experimental design
+dge <- calcNormFactors(dge)
+```
+
+```{r}
+# logcounts not filtered by expression for QC plots
+logcounts <- cpm(dge, log = TRUE)
+
+logcounts[1:5,1:6]
+```
+
+```{r}
+# Compare genotypes, controlling for gender
+design <- model.matrix( ~ type, data = metadata)
+
+# Determine which genes have enough counts to keep around
+keep <- filterByExpr(dge, design = design)
+```
+
+```{r}
+gene_data_matrix %>% dim()
+keep %>% length()
+```
+
+```{r}
+y <- dge[keep, keep.lib.sizes = FALSE]
+y <- normLibSizes(y)
+
+y %>% dim()
+```
+
+```{r}
+#plotBCV(y)
+fit <- glmQLFit(y, design, robust = TRUE)
+#plotQLDisp(fit)
+```
+
+```{r}
+# Test for differences between ANY group -- like a one-way ANOVA
+y <- glmQLFTest(fit, coef = 2)
+results <- topTags(y, n = Inf, sort.by = "none")$table
+```
+
+```{r}
+results %>% head()
+```
+
+```{r}
+plot_volcano(results)
+```
+
+
+```{r}
+plot_volcano(results, x = "logFC", y = "FDR", fdr = 0.01, lfc = 0.15
+  #lab = "gene_name", label_sig = TRUE, annotate_counts = FALSE
+  ) +
+  labs(
+    title = "PRAD: tumor vs normal",
+    #subtitle = "",
+    x = "logFC",
+    y = "-log10(PValue)",
+    caption = "fds < 0.01"
+  ) +
+  theme_coriell()
+```
+
+```{r}
+siq_genes <- results %>% 
+  filter(FDR < 0.001 & logFC > 0.2) %>% 
+  select(genes) %>% 
+  pull()
+```
+
+```{r}
+quickmap(logcounts[siq_genes,])
+```
+
+
+```{r}
+metadata2 <- metadata %>% column_to_rownames("sample_ID")
+
+ann_cols <- list(c("tumor" = "deepskyblue1", "adj_normal" = "goldenrod1")) 
+
+quickmap(logcounts[siq_genes,],
+  diverging_palette = TRUE,
+  fix_extreme = TRUE,
+  thresh = 3,
+  removeVar = NULL,
+  annotation_col = metadata2,
+  annotation_colors = ann_cols,
+  show_colnames = FALSE,
+  main = "PRAD Most Variable Coding Genes Tumor_vs_normal"
+  #filename = here("results", "heatmap_PRAD_tumor_vs_normal.png")
+  )
+```

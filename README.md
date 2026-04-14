@@ -259,15 +259,13 @@ here will be expected solution in [html](midterm/exam_spring_2026.html)
 
 ------------------------------------------------------------------------
 
-#### Week 14: Example to NGS analysis (RNAseq)
+#### Week 15: Example to NGS analysis (RNAseq)
 
 -   RNAseq analysis [slides](week15/Bioinfo_class_week15_2026_RNAseq_overview.pdf)
 
--   RNAseq analysis: [notebook](week6/Intro_RNAseq_dge.qmd)
-
-
+-   RNAseq analysis: [notebook](week15/Intro_RNAseq_dge.qmd)
+-   data: [counts](week15/data/TCGA_PRAD_counts.tsv.gz)
 
 ------------------------------------------------------------------------
 
-#### 
 
