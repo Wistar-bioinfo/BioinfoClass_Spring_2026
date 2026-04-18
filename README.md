@@ -308,7 +308,10 @@ Then, pick the *__datasets that__* letter corespont to *__first letter of your f
 - Download the RStudio notebook and dataset based on your first name.
 - Run all commands in the notebook, and save the resulting tables and figures `ggsave()` to your computer.
 - Create a presentation (PowerPoint or another suitable format) by placing each generated plot on a separate slide. Each slide should include a clear and concise description (a title and description or more detailed subtitle).
-- Pleare take liberty in your grafic design: in RStudio you can change color of your plot, color of your annotation in your analysis (tumor vs normal), background and font in your PowerPoint.
+- Please take a liberty in your grafic design: 
+  - In RStudio you can change color of your plot, color of your annotation in your analysis (tumor vs normal). 
+  - In your PowerPoint have fun with your of background and fonts .
+
 - Submit your presentation along with the differential expression results table (CSV format file).
 
 
