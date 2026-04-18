@@ -273,11 +273,11 @@ here will be expected solution in [html](midterm/exam_spring_2026.html)
 
 #### Final Exam
 
-Please download the RStudio notebook for Differential Expression (DE) analysis from the link below:
+Please download the RStudio notebook from the link below and run the __Differential Gene Expression (DGE) analysis__:
 
-[RStudio Code (qmd)](Finals/DiffExperssionAnalysis_RNAseq_finals.qmd) 
+[RStudio Code (qmd)](Finals/DiffExperssionAnalysis_RNAseq_finals.qmd)
 
-Then, pick the datasets that letter corespont to first letter of your first name  along with dataset pick corresponding metadata:
+Then, pick the *__datasets that__* letter corespont to *__first letter of your first name__*  along with dataset pick corresponding *__metadata__*
 
  [Data A or B](Finals/data/tcga_prad_counts_50samples_group_A_or_B.tsv) and [Metadata A or B](Finals/data/tcga_prad_metadata_50samples_group_A_or_B.tsv)
 
@@ -305,9 +305,10 @@ Then, pick the datasets that letter corespont to first letter of your first name
 
 ##### Expected Results:
 
-- Download the RStudio notebook and dataset based on your first name chosen dataset.
+- Download the RStudio notebook and dataset based on your first name.
 - Run all commands in the notebook, and save the resulting tables and figures `ggsave()` to your computer.
 - Create a presentation (PowerPoint or another suitable format) by placing each generated plot on a separate slide. Each slide should include a clear and concise description (a title and description or more detailed subtitle).
+- Pleare take liberty in your grafic design: in RStudio you can change color of your plot, color of your annotation in your analysis (tumor vs normal), background and font in your PowerPoint.
 - Submit your presentation along with the differential expression results table (CSV format file).
 
 
