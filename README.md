@@ -271,7 +271,7 @@ here will be expected solution in [html](midterm/exam_spring_2026.html)
 
 
 
-#### Final Exam
+## Final Exam
 
 Please download the RStudio notebook from the link below and run the __Differential Gene Expression (DGE) analysis__:
 
