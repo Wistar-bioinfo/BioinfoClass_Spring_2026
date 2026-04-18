@@ -269,3 +269,56 @@ here will be expected solution in [html](midterm/exam_spring_2026.html)
 
 ------------------------------------------------------------------------
 
+
+
+#### Final Exam
+
+Please download the RStudio notebook for Differential Expression (DE) analysis from the link below:
+
+[RStudio Code (qmd)](Finals/DiffExperssionAnalysis_RNAseq_finals.qmd) 
+
+Then, pick the datasets that letter corespont to first letter of your first name  along with dataset pick corresponding metadata:
+
+ [Data A or B](Finals/data/tcga_prad_counts_50samples_group_A_or_B.tsv) and [Metadata A or B](Finals/data/tcga_prad_metadata_50samples_group_A_or_B.tsv)
+
+ [Data C or D](Finals/data/tcga_prad_counts_50samples_group_C_or_D.tsv) and [Metadata C or D](Finals/data/tcga_prad_metadata_50samples_group_C_or_D.tsv)
+
+ [Data E or F](Finals/data/tcga_prad_counts_50samples_group_E_or_F.tsv) and [Metadata E or F](Finals/data/tcga_prad_metadata_50samples_group_E_or_F.tsv)
+
+ [Data G_or_H](Finals/data/tcga_prad_counts_50samples_group_G_or_H.tsv) and [Metadata G or H](Finals/data/tcga_prad_metadata_50samples_group_G_or_H.tsv)
+
+ [Data I to K](Finals/data/tcga_prad_counts_50samples_group_I_to_K.tsv) and [Metadata I to K](Finals/data/tcga_prad_metadata_50samples_group_I_to_K.tsv)
+
+ [Data L or M](Finals/data/tcga_prad_counts_50samples_group_L_or_M.tsv) and [Metadata L or M](Finals/data/tcga_prad_metadata_50samples_group_L_or_M.tsv)
+
+ [Data N or O](Finals/data/tcga_prad_counts_50samples_group_N_or_O.tsv) and [Metadata N or O](Finals/data/tcga_prad_metadata_50samples_group_N_or_O.tsv)
+
+  [Data P to R](Finals/data/tcga_prad_counts_50samples_group_P_to_R.tsv) and [Metadata P to R](Finals/data/tcga_prad_metadata_50samples_group_P_to_R.tsv)
+
+ [Data S or T](Finals/data/tcga_prad_counts_50samples_group_S_or_T.tsv) and [Metadata S or T](Finals/data/tcga_prad_metadata_50samples_group_S_or_T.tsv)
+
+ [Data U to W](Finals/data/tcga_prad_counts_50samples_group_U_to_W.tsv) and [Metadata U_to_W](Finals/data/tcga_prad_metadata_50samples_group_U_to_W.tsv)
+
+ [Data X to Z](Finals/data/tcga_prad_counts_50samples_group_X_to_Z.tsv) and [Metadata X to Z](Finals/data/tcga_prad_metadata_50samples_group_X_to_Z.tsv)
+
+
+
+##### Expected Results:
+
+- Download the RStudio notebook and dataset based on your first name chosen dataset.
+- Run all commands in the notebook, and save the resulting tables and figures `ggsave()` to your computer.
+- Create a presentation (PowerPoint or another suitable format) by placing each generated plot on a separate slide. Each slide should include a clear and concise description (a title and description or more detailed subtitle).
+- Submit your presentation along with the differential expression results table (CSV format file).
+
+
+
+_Optional_:
+render your RStudio QMD notebook into an HTML or PDF file. To prevent lengthy table outputs, use  `%>% head()` after generating each table.
+
+
+
+Hope you enjoyed the class, and good luck!
+
+
+
+------------------------------------------------------------------------

@@ -1,0 +1,276 @@
+## Install if you do not have them yet
+uncoment the part you need 
+```{r}
+# BiocManager::install('tidyverse')
+# BiocManager::install('PCAtools')
+# BiocManager::install('edgeR')
+# #
+# BiocManager::install('pheatmap')
+# #
+# # # Make sure you have devtools installed
+# install.packages("devtools")
+# # # Then install using devtools::install_github
+# devtools::install_github("coriell-research/coriell")
+```
+
+## Load Libraries
+
+```{r, message=FALSE}
+library('tidyverse')
+library('PCAtools')
+library('edgeR')
+library('coriell')
+```
+
+## Load data
+
+```{r}
+getwd()
+```
+
+## Load Data
+
+##### fill up the rest of file name `...` with file that coresponds to first letter of your first name
+
+```{r, message=FALSE}
+tcga_counts <- read_tsv("data/tcga_prad_counts_ ...... ")
+
+metadata <- read_tsv("data/tcga_prad_metadata_ ....... ")
+```
+
+### Visualy inspect how dat alooks like
+
+```{r}
+tcga_counts %>% head()
+```
+
+```{r}
+metadata %>% head()
+```
+
+# Here are the name of your samples
+```{r}
+colnames(tcga_counts)
+```
+
+### Make version with matrix with column/row names
+
+```{r}
+tcga_counts2 <- tcga_counts %>% column_to_rownames("gene_ID")
+tcga_counts2 %>% head()
+```
+
+```{r}
+metadata2 <- metadata %>% column_to_rownames("sample_ID")
+metadata2 %>% head()
+```
+
+## Make edgeR object for differential gene expression analysis
+
+```{r}
+# Initialize the edgeR object
+dge <- DGEList(counts = tcga_counts2,
+               group = metadata2$type,
+               genes = rownames(tcga_counts2))
+
+#  normalization steps independent from our experimental design
+dge <- calcNormFactors(dge)
+```
+
+
+## PCA
+#### Create logcounts (log counts per milion) for PCA
+
+```{r}
+# logcounts not filtered by expression for QC plots
+logcounts <- cpm(dge, log = TRUE)
+
+logcounts[1:5,1:6]
+```
+
+#### run PCA with PCAtools
+```{r}
+pca <- pca(logcounts, metadata = dge$samples, center = TRUE, scale = TRUE) #, removeVar = 0) # , removeVar = 0.1
+```
+
+### plot PCA results
+
+note: when you saving result picture/table into `results` folder you have to create it first in proper place
+either you create it yourself at your computer or type "1" (Yes) at your RStudio console when asked.
+
+```{r}
+screeplot(pca, components = 1:12) #, axisLabSize = 18, titleLabSize = 22)
+
+ggsave("results/screeplot_your_XXXgroup.png")
+ggsave("results/screeplot_your_XXXgroup.pdf")
+
+# note: when you saving into `results` folder you have to create it first in proper place
+```
+
+```{r}
+biplot(pca, 
+       colby = "group",
+       colkey = c(tumor = 'dodgerblue2', adj_norm = 'gold2'),
+       # showLoadings = TRUE,
+       legendPosition = 'right',
+       # encircle = TRUE,
+       lab = NULL
+       )
+
+ggsave("results/pca_plot_your_XXXgroup.png")
+```
+
+## Run diff gene experssion analysis
+
+### Build model
+
+```{r}
+# Compare genotypes, controlling for gender
+design <- model.matrix( ~ type, data = metadata)
+
+# Determine which genes have enough counts to keep around
+keep <- filterByExpr(dge, design = design)
+```
+
+```{r}
+y <- dge[keep, keep.lib.sizes = FALSE]
+y <- normLibSizes(y)
+```
+
+### check how many uninformative genes you filter out by looking to final dimention of data
+```{r}
+dge %>% dim()
+y %>% dim()
+```
+
+### Check data before Normalization
+```{r}
+logcounts %>% 
+  as_tibble(rownames = "geneID") %>% 
+  pivot_longer(cols = -1, names_to = "sample_ID", values_to = "counts") %>% 
+  ggplot(aes(sample_ID, counts)) +
+  geom_boxplot(outliers = F, fill = "red3", fatten = 4, lwd=0.1) + #, color="gray80"
+  theme_classic() +
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank())
+
+ggsave("results/normalization_original_data_XXXgroup.png")
+```
+
+### Check sample distribution after Normalization
+```{r}
+# logcounts not filtered by expression for QC plots
+logcounts_y <- cpm(y, log = TRUE)
+
+logcounts_y %>% 
+  as_tibble(rownames = "geneID") %>% 
+  pivot_longer(cols = -1, names_to = "sample_ID", values_to = "counts") %>% 
+  ggplot(aes(sample_ID, counts)) +
+  geom_boxplot(outliers = F, fill = "red3", fatten = 4, lwd=0.1) + #, color="gray80"
+  theme_classic() +
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank())
+
+ggsave("results/normalization_normalized_data_XXXgroup.png")
+```
+
+### Fit model to data
+
+```{r}
+# Fit model
+fit <- glmQLFit(y, design, robust = TRUE)
+# plotQLDisp(fit)
+```
+
+### Get diff expression by running `glmQLFTest`
+```{r}
+# Test for differences between ANY group -- like a one-way ANOVA
+y <- glmQLFTest(fit, coef = 2)
+results <- topTags(y, n = Inf, sort.by = "none")$table
+```
+
+### Save the results
+note: when you saving into `results` folder you have to create it first in proper place
+```{r}
+results
+results %>% write_csv("results/results_XXXgroup.csv")
+#write_csv(results, "results/results_table.csv")
+```
+
+### PLot DE results
+
+#### MA plot
+note: when you saving into `results` folder you have to create it first in proper place
+```{r}
+# Create and MA plot of the results
+m <- plot_md(results, lfc = 1 ,fdr = 0.001)
+m
+
+ggsave("results/MA_plot_XXXgroup.png")
+```
+
+#### Volcano plot with couts of sig chnged genes
+```{r}
+plot_volcano(results, x = "logFC", y = "FDR", fdr = 0.001, lfc = 1,
+  #lab = "gene_name", label_sig = TRUE, annotate_counts = FALSE
+  ) +
+  labs(
+    title = "PRAD: tumor vs normal",
+    #subtitle = "",
+    x = "logFC",
+    y = "-log10(PValue)",
+    caption = "results for FC>2 and FDR < 0.01"
+  ) +
+  theme_coriell()
+
+ggsave("results/volcanoplot.plot1_XXXgroup.png")
+```
+
+#### Volcano plot with highlight of few most changed genes
+```{r}
+plot_volcano(results, x = "logFC", y = "FDR", fdr = 0.001, lfc = 1,
+  lab = "genes", label_sig = TRUE, annotate_counts = FALSE) +
+  labs(
+    title = "PRAD: tumor vs normal",
+    #subtitle = "",
+    x = "logFC",
+    y = "-log10(PValue)",
+    caption = "results for FC>2 and FDR < 0.01"
+  ) +
+  theme_coriell()
+
+ggsave("results/volcanoplot_plot2_XXXgroup.png")
+```
+
+
+### Heatmap
+
+#### pull only significan genes
+
+```{r}
+siq_genes <- results %>% filter(abs(logFC) > 1 & FDR < 0.001) %>% rownames()
+```
+
+##### Check default heatmap
+```{r}
+# pheatmap::pheatmap(logcounts[siq_genes,])
+quickmap(logcounts_y[siq_genes,])
+```
+
+#### Nicer version of version of heatmap
+note: when you saving into `results` folder you have to create it first in proper place
+
+```{r}
+col_df <- metadata %>% 
+  select(sample_ID, type) %>% 
+  column_to_rownames("sample_ID")
+
+ann_cols <- list(type = c("tumor" = "deepskyblue1", "adj_norm" = "goldenrod1"))
+
+qm <- quickmap(logcounts[siq_genes,],
+         annotation_col = col_df,
+         annotation_colors = ann_cols,
+         show_colnames = FALSE,
+         main = "PRAD Tumor vs Normal"
+  )
+
+ggsave("results/heatmap_XXXgroup.png", qm)
+```
